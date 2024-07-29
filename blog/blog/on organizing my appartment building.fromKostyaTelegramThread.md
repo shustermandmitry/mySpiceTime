@@ -1,0 +1,3 @@
+dave the mainainance guy here is my co conspirator here. Ill bring him to the zoom with you and me, when time is right. He understands exactly what we doing. And he will endorse me to the manager of the next building. The residents will not know who started it. Dave will get the credit, people will spread the word, and i will crawl off to the next unsuspecting victim, groomed by dave, to be defenseless.
+
+We will call it the social rot desease model.

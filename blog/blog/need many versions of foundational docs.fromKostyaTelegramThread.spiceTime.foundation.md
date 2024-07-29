@@ -1,0 +1,1 @@
+we need many versions of foundational docs, to hit every possible type of a hippy out there. Thats why we need a diverse group of foundational members, to represent entire human race.

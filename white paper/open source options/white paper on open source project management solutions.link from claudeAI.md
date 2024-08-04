@@ -1,1 +1,1 @@
-https://claude.site/artifacts/848b8fce-3814-4c7d-8fc9-3a0917d6fd52
+https://claude.site/artifacts/f1323f9d-d9e3-46f6-af37-034d2193e43d

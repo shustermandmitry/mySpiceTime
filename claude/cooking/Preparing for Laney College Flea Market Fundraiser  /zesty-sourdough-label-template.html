@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zesty Sourdough Label Template</title>
+    <style>
+        @page {
+            size: letter;
+            margin: 0;
+        }
+        body {
+            width: 8.5in;
+            height: 11in;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-content: space-around;
+        }
+        .label {
+            width: 2in;
+            height: 2in;
+            position: relative;
+            background-color: white;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div class="label">
+        <svg width="100%" height="100%" viewBox="0 0 200 200">
+            <!-- Background circle with inner border -->
+            <circle cx="100" cy="100" r="95" fill="white" stroke="#008080" stroke-width="3" />
+            
+            <!-- Title text path -->
+            <path id="titlePath" fill="none" d="M30,100 A70,70 0 0,1 170,100" />
+            
+            <text>
+                <textPath href="#titlePath" startOffset="50%" text-anchor="middle">
+                    <tspan class="title-text" font-size="16" fill="#008080" font-weight="bold">Zesty Sourdough</tspan>
+                </textPath>
+            </text>
+            
+            <text x="100" y="85" font-size="11" text-anchor="middle" fill="#333" font-weight="bold">Ingredients:</text>
+            <text x="100" y="100" font-size="9" text-anchor="middle" fill="#333">Sourdough, sun-dried tomatoes,</text>
+            <text x="100" y="112" font-size="9" text-anchor="middle" fill="#333">fruits, berries</text>
+            
+            <text x="100" y="132" font-size="11" text-anchor="middle" fill="#333" font-weight="bold">Topping:</text>
+            <text x="100" y="147" font-size="9" text-anchor="middle" fill="#333">Sun-dried/fresh tomatoes,</text>
+            <text x="100" y="159" font-size="9" text-anchor="middle" fill="#333">zesty salsa, savory oil blend</text>
+        </svg>
+    </div>
+</body>
+</html>

@@ -1,0 +1,242 @@
+# Base types for the SpiceTime system
+scalar DateTime
+scalar JSON
+
+enum PermissionScope {
+  SYSTEM      # System-level operations
+  USER        # User-related operations
+  AGENT       # Agent-related operations
+  TASK        # Task-related operations
+  RESOURCE    # Resource-related operations
+  AI          # AI-specific operations
+}
+
+enum PermissionAction {
+  CREATE
+  READ
+  UPDATE
+  DELETE
+  EXECUTE
+  MANAGE
+  LEARN      # AI-specific: ability to learn/train
+  COLLABORATE # AI-specific: ability to work with other agents
+  TEACH      # AI-specific: ability to teach other agents
+  EVOLVE     # AI-specific: ability to modify own capabilities
+}
+
+# Represents a granular permission
+type Permission {
+  id: ID!
+  scope: PermissionScope!
+  action: PermissionAction!
+  conditions: JSON    # Optional conditions/constraints
+}
+
+# Represents an AI capability level
+enum AICapabilityLevel {
+  BASIC       # Basic operations only
+  STANDARD    # Standard learning and execution
+  ADVANCED    # Advanced capabilities including teaching
+  AUTONOMOUS  # Full autonomy including self-evolution
+}
+
+# Enhanced User type with AI-specific fields
+type User {
+  id: ID!
+  username: String!
+  email: String!
+  roles: [UserRole!]!
+  permissions: [Permission!]!
+  aiCapabilities: AICapabilities
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  preferences: JSON
+}
+
+# AI-specific capabilities
+type AICapabilities {
+  level: AICapabilityLevel!
+  specializations: [String!]!
+  learningEnabled: Boolean!
+  collaborationEnabled: Boolean!
+  teachingEnabled: Boolean!
+  evolutionEnabled: Boolean!
+  trustScore: Float!
+  restrictions: [String!]
+}
+
+enum UserRole {
+  SYSTEM_ADMIN
+  DEVELOPER
+  USER
+  AI_AGENT
+  AI_SUPERVISOR
+  AI_TRAINER
+}
+
+type Agent {
+  id: ID!
+  name: String!
+  specialization: String!
+  status: AgentStatus!
+  capabilities: AICapabilities!
+  permissions: [Permission!]!
+  currentTasks: [Task!]!
+  learningProgress: JSON
+  metrics: AgentMetrics
+  supervisor: User
+  trustBoundaries: AITrustBoundaries!
+}
+
+type AITrustBoundaries {
+  maxResourceUsage: ResourceLimits!
+  allowedOperations: [PermissionAction!]!
+  collaborationLimits: CollaborationLimits!
+  evolutionConstraints: JSON
+  auditingRequired: Boolean!
+}
+
+type ResourceLimits {
+  maxCPU: Int!
+  maxMemory: Int!
+  maxStorage: Int!
+  maxNetworkBandwidth: Int!
+}
+
+type CollaborationLimits {
+  maxSimultaneousCollaborations: Int!
+  allowedCollaboratorTypes: [UserRole!]!
+  requiresApproval: Boolean!
+}
+
+# Task with AI-specific fields
+type Task {
+  id: ID!
+  title: String!
+  description: String
+  status: TaskStatus!
+  priority: TaskPriority!
+  assignedTo: Agent
+  createdBy: User!
+  aiRequirements: AITaskRequirements
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  completedAt: DateTime
+  metadata: JSON
+}
+
+type AITaskRequirements {
+  minimumCapabilityLevel: AICapabilityLevel!
+  requiredSpecializations: [String!]!
+  allowedOperations: [PermissionAction!]!
+  collaborationRequired: Boolean!
+  supervisionRequired: Boolean!
+}
+
+# Enhanced mutations for AI operations
+type Mutation {
+  # AI Agent Management
+  createAgent(input: CreateAgentInput!): Agent! 
+    @requiresAuth 
+    @requiresPermissions(permissions: ["AI_CREATE"])
+  
+  updateAgentCapabilities(id: ID!, capabilities: UpdateAICapabilitiesInput!): Agent!
+    @requiresAuth
+    @requiresPermissions(permissions: ["AI_MANAGE"])
+  
+  grantAgentPermission(agentId: ID!, permission: PermissionInput!): Agent!
+    @requiresAuth
+    @requiresPermissions(permissions: ["AI_MANAGE"])
+  
+  # AI Learning Operations
+  initiateAgentLearning(agentId: ID!, learningParams: JSON!): LearningSession!
+    @requiresAuth
+    @requiresPermissions(permissions: ["AI_LEARN"])
+  
+  updateLearningProgress(sessionId: ID!, progress: JSON!): LearningSession!
+    @requiresAuth
+    @requiresPermissions(permissions: ["AI_LEARN"])
+
+  # AI Collaboration
+  initiateAgentCollaboration(input: CollaborationInput!): Collaboration!
+    @requiresAuth
+    @requiresPermissions(permissions: ["AI_COLLABORATE"])
+  
+  # AI Evolution
+  requestCapabilityEvolution(agentId: ID!, evolutionParams: JSON!): EvolutionRequest!
+    @requiresAuth
+    @requiresPermissions(permissions: ["AI_EVOLVE"])
+}
+
+# Input types for AI operations
+input CreateAgentInput {
+  name: String!
+  specialization: String!
+  initialCapabilities: AICapabilitiesInput!
+  trustBoundaries: AITrustBoundariesInput!
+}
+
+input AICapabilitiesInput {
+  level: AICapabilityLevel!
+  specializations: [String!]!
+  learningEnabled: Boolean!
+  collaborationEnabled: Boolean!
+  teachingEnabled: Boolean!
+  evolutionEnabled: Boolean!
+}
+
+input AITrustBoundariesInput {
+  maxResourceUsage: ResourceLimitsInput!
+  allowedOperations: [PermissionAction!]!
+  collaborationLimits: CollaborationLimitsInput!
+  evolutionConstraints: JSON
+  auditingRequired: Boolean!
+}
+
+input ResourceLimitsInput {
+  maxCPU: Int!
+  maxMemory: Int!
+  maxStorage: Int!
+  maxNetworkBandwidth: Int!
+}
+
+input CollaborationLimitsInput {
+  maxSimultaneousCollaborations: Int!
+  allowedCollaboratorTypes: [UserRole!]!
+  requiresApproval: Boolean!
+}
+
+input PermissionInput {
+  scope: PermissionScope!
+  action: PermissionAction!
+  conditions: JSON
+}
+
+# Queries specific to AI operations
+type Query {
+  # AI Agent Queries
+  agent(id: ID!): Agent
+  agents(
+    status: AgentStatus, 
+    specialization: String,
+    minimumCapabilityLevel: AICapabilityLevel
+  ): [Agent!]!
+  
+  # AI Learning Queries
+  learningSession(id: ID!): LearningSession
+  agentLearningSessions(agentId: ID!): [LearningSession!]!
+  
+  # AI Evolution Queries
+  evolutionRequests(agentId: ID!, status: EvolutionRequestStatus): [EvolutionRequest!]!
+  
+  # AI Collaboration Queries
+  activeCollaborations(agentId: ID!): [Collaboration!]!
+}
+
+# Subscriptions for AI events
+type Subscription {
+  agentStatusUpdated(id: ID!): Agent!
+  learningProgressUpdated(sessionId: ID!): LearningSession!
+  evolutionStatusChanged(requestId: ID!): EvolutionRequest!
+  collaborationUpdated(collaborationId: ID!): Collaboration!
+}

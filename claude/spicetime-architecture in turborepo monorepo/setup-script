@@ -1,0 +1,123 @@
+const fs = require('fs');
+const path = require('path');
+
+// Helper function to create directory recursively
+function mkdirp(dir) {
+  if (fs.existsSync(dir)) return;
+  fs.mkdirSync(dir, { recursive: true });
+}
+
+// Helper function to write file ensuring directory exists
+function writeFile(filePath, content) {
+  mkdirp(path.dirname(filePath));
+  fs.writeFileSync(filePath, content, 'utf8');
+}
+
+// Base directory - explicitly starting from current directory
+const baseDir = 'docs/examples/graphql';
+
+// Create directory structure
+['schema', 'gateway', 'client'].forEach(dir => {
+  mkdirp(path.join(baseDir, dir));
+});
+
+// Reference Schema
+const schemaContent = `# This is a reference implementation demonstrating AI-aware permissions and auth
+# DO NOT USE DIRECTLY IN PRODUCTION
+
+# Base types for the SpiceTime system
+scalar DateTime
+scalar JSON
+
+enum PermissionScope {
+  SYSTEM      # System-level operations
+  USER        # User-related operations
+  AGENT       # Agent-related operations
+  TASK        # Task-related operations
+  RESOURCE    # Resource-related operations
+  AI          # AI-specific operations
+}
+
+# [Rest of schema implementation...]
+# Note: This is a reference example only
+`;
+
+// Gateway Reference Implementation
+const gatewayContent = `/**
+ * Reference implementation of an authentication-aware GraphQL gateway
+ * DO NOT USE DIRECTLY IN PRODUCTION
+ */
+
+const { ApolloServer } = require('@apollo/server');
+const { ApolloGateway, RemoteGraphQLDataSource } = require('@apollo/gateway');
+const { startStandaloneServer } = require('@apollo/server/standalone');
+
+// [Rest of gateway implementation...]
+// Note: This is a reference example only
+`;
+
+// Client Reference Implementation
+const clientContent = `/**
+ * Reference implementation of the GraphQL client setup
+ * DO NOT USE DIRECTLY IN PRODUCTION
+ */
+
+const { ApolloClient, InMemoryCache, split, HttpLink } = require('@apollo/client');
+const { GraphQLWsLink } = require('@apollo/client/link/subscriptions');
+
+// [Rest of client implementation...]
+// Note: This is a reference example only
+`;
+
+// README Content
+const readmeContent = `# SpiceTime GraphQL Reference Examples
+
+These examples demonstrate the implementation patterns for the SpiceTime GraphQL layer.
+They are for reference only and should not be used directly in production.
+
+## Contents
+
+### Schema (\`/schema\`)
+- AI-aware permission system
+- Role-based access control
+- Agent capabilities and trust boundaries
+
+### Gateway (\`/gateway\`)
+- Authentication implementation
+- Permission enforcement
+- Service composition
+
+### Client (\`/client\`)
+- Apollo client setup
+- Subscription handling
+- Authentication integration
+
+## Usage
+
+These examples should be used as reference material when implementing:
+1. GraphQL schema design
+2. Gateway authentication
+3. Client configuration
+
+## Important Notes
+
+- These are reference implementations only
+- Do not copy directly into production code
+- Use as guidance for actual implementations
+- Consider security implications
+- Update dependencies and security practices for production use
+`;
+
+// Write files
+try {
+  writeFile(path.join(baseDir, 'schema', 'reference-schema.graphql'), schemaContent);
+  writeFile(path.join(baseDir, 'gateway', 'auth-gateway-example.js'), gatewayContent);
+  writeFile(path.join(baseDir, 'client', 'client-implementation.js'), clientContent);
+  writeFile(path.join(baseDir, 'README.md'), readmeContent);
+
+  console.log('✨ GraphQL reference examples created successfully!');
+  console.log('Location:', baseDir);
+  console.log('Please refer to the README.md for usage guidelines.');
+} catch (error) {
+  console.error('Error creating reference examples:', error);
+}

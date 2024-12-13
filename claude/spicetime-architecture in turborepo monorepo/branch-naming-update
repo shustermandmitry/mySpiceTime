@@ -1,0 +1,71 @@
+## Branch Naming Convention
+
+### Package Development Branches
+
+Branch names should reflect the package's path in the monorepo:
+
+```
+feature/[package-type]-[package-name]-[feature]
+```
+
+Where:
+- `package-type`: services, clients, internal, tools
+- `package-name`: name of your package
+- `feature`: specific feature being developed
+
+Example paths and corresponding branch names:
+
+```
+# Backend service
+Path:   monorepo/packages/services/auth
+Branch: feature/services-auth-jwt
+
+# Frontend client
+Path:   monorepo/packages/clients/admin
+Branch: feature/clients-admin-dashboard
+
+# Internal package
+Path:   monorepo/internal/core/logger
+Branch: feature/internal-logger-rotation
+
+# Development tool
+Path:   monorepo/tools/eslint-config
+Branch: feature/tools-eslint-typescript
+```
+
+### Example Package Development
+
+```bash
+# Creating an authentication service
+git checkout develop
+git checkout -b feature/services-auth-jwt
+
+# Create package in corresponding path
+mkdir -p monorepo/packages/services/auth
+cd monorepo/packages/services/auth
+pnpm init
+
+# Push branch
+git push -u origin feature/services-auth-jwt
+```
+
+### Other Branch Types
+```
+release/v[major].[minor].[patch]    # Release branches
+hotfix/[issue-number]-[description] # Hotfix branches
+```
+
+## Branch Structure Overview
+```
+master
+  └── develop
+      ├── feature/services-auth-jwt
+      ├── feature/clients-admin-dashboard
+      ├── feature/internal-logger-rotation
+      └── feature/tools-eslint-typescript
+```
+
+This naming convention makes it clear:
+- Where the package lives in the monorepo
+- What type of package it is
+- What feature is being developed

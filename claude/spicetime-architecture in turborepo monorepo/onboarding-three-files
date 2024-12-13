@@ -1,0 +1,343 @@
+# onboarding/01-repository-structure.md
+```markdown
+---
+title: Repository Structure
+path: /repository-structure
+order: 1
+---
+
+# Repository Structure
+
+## Directory Layout
+
+```
+spicetime-architecture/
+├── docs/                           # Project documentation
+│   ├── .generated/                 # Auto-generated documentation
+│   ├── architecture/               # Architecture documentation
+│   │   ├── diagrams/              # Architecture diagrams
+│   │   └── decisions/             # Architecture decisions
+│   └── api/                       # API documentation
+├── monorepo/                      # Main monorepo structure
+│   ├── packages/                  # Project packages
+│   │   ├── services/             # Backend services
+│   │   └── clients/              # Frontend applications
+│   ├── internal/                 # Internal shared packages
+│   │   ├── core/                # Core utilities
+│   │   └── graphql/             # GraphQL schemas
+│   └── tools/                   # Development tools
+└── website/                      # Documentation website
+    └── docs/                    # Gatsby documentation site
+```
+
+## Key Directories Explained
+
+### Documentation (`docs/`)
+- `.generated/`: Auto-generated API documentation, type definitions, and other generated docs
+- `architecture/`: System design documents, diagrams, and architectural decision records (ADRs)
+- `api/`: API specifications, guides, and documentation
+
+### Monorepo (`monorepo/`)
+- `packages/`: Main project packages
+  - `services/`: Backend microservices (auth, api, etc.)
+  - `clients/`: Frontend applications (web, admin dashboard)
+- `internal/`: Shared internal packages
+  - `core/`: Common utilities and configurations
+  - `graphql/`: Shared GraphQL schemas and types
+- `tools/`: Development and build tools
+
+### Website (`website/`)
+- Gatsby-based documentation site
+- Aggregates all project documentation
+- Provides searchable, versioned docs
+
+## Configuration Files
+
+### Root Configuration
+- `pnpm-workspace.yaml`: Workspace package definitions
+- `turbo.json`: Turborepo pipeline configuration
+- `tsconfig.json`: Base TypeScript configuration
+- `.eslintrc.js`: Base ESLint rules
+- `.prettierrc`: Code formatting rules
+
+### Package Configuration
+Each package in the monorepo contains:
+- `package.json`: Package dependencies and scripts
+- `tsconfig.json`: Package-specific TypeScript settings
+- `README.md`: Package documentation
+- `docs/`: Package-specific documentation
+
+## Common Paths Quick Reference
+
+### Development
+- Services: `monorepo/packages/services/<service-name>`
+- Client Apps: `monorepo/packages/clients/<app-name>`
+- Shared Code: `monorepo/internal/core`
+- Build Tools: `monorepo/tools`
+
+### Documentation
+- API Docs: `docs/api`
+- Architecture: `docs/architecture`
+- Generated: `docs/.generated`
+- Website: `website/docs`
+```
+
+# onboarding/02-development-tools.md
+```markdown
+---
+title: Development Tools
+path: /development-tools
+order: 2
+---
+
+# Development Tools
+
+[Previous development tools content remains exactly the same...]
+```
+
+# onboarding/03-git-and-development-workflows.md
+```markdown
+---
+title: Git and Development Workflows
+path: /git-and-development-workflows
+order: 3
+---
+
+# Git and Development Workflows
+
+## Branch Structure
+
+```
+master
+  └── develop
+      ├── feature/auth-service
+      ├── feature/graphql-gateway
+      └── feature/web-client
+```
+
+### Branch Types
+- `master`: Production code only
+- `develop`: Main development branch
+- `feature/*`: Feature development
+- `release/*`: Release preparation
+- `hotfix/*`: Production fixes
+
+## Branch Naming
+
+### Conventions
+```
+feature/[package-name]-[feature-name]
+release/v[major].[minor].[patch]
+hotfix/[issue-number]-[description]
+```
+
+### Examples
+- `feature/auth-service-jwt`
+- `release/v1.2.0`
+- `hotfix/123-fix-memory-leak`
+
+## Commit Messages
+
+### Format
+```
+type(scope): description
+
+[optional body]
+
+[optional footer]
+```
+
+### Types
+- `feat`: New features
+- `fix`: Bug fixes
+- `docs`: Documentation
+- `style`: Code style
+- `refactor`: Refactoring
+- `test`: Tests
+- `chore`: Build/tools
+
+### Examples
+```
+feat(auth): implement JWT authentication
+fix(api): resolve memory leak in connection pool
+docs(onboarding): update setup instructions
+```
+
+## Example: New Feature Development
+
+### 1. Setup Feature Branch
+```bash
+# Create branch
+git checkout develop
+git pull origin develop
+git checkout -b feature/auth-service-jwt
+
+# Initialize package
+mkdir -p monorepo/packages/services/auth
+cd monorepo/packages/services/auth
+pnpm init
+```
+
+### 2. Implement Feature
+```typescript
+// src/index.ts
+export interface AuthService {
+  authenticate(credentials: Credentials): Promise<AuthToken>;
+  validate(token: string): Promise<boolean>;
+}
+
+// src/jwt.ts
+import jwt from 'jsonwebtoken';
+
+export class JWTAuthService implements AuthService {
+  constructor(private readonly secret: string) {}
+
+  async authenticate(credentials: Credentials): Promise<AuthToken> {
+    // Implementation
+  }
+
+  async validate(token: string): Promise<boolean> {
+    // Implementation
+  }
+}
+```
+
+### 3. Add Tests
+```typescript
+// tests/jwt.test.ts
+import { describe, it, expect } from 'vitest';
+import { JWTAuthService } from '../src/jwt';
+
+describe('JWTAuthService', () => {
+  it('should authenticate valid credentials', async () => {
+    const auth = new JWTAuthService('secret');
+    const token = await auth.authenticate({
+      username: 'test',
+      password: 'password'
+    });
+    expect(token).toBeDefined();
+  });
+});
+```
+
+### 4. Development Cycle
+```bash
+# Run tests
+pnpm test
+
+# Build package
+pnpm build
+
+# Generate docs
+pnpm docs:generate
+
+# Commit changes
+git add .
+git commit -m "feat(auth): implement JWT authentication
+
+[milestone]"
+
+# Push changes
+git push -u origin feature/auth-service-jwt
+```
+
+## Pull Request Process
+
+### 1. Prepare Changes
+```bash
+# Ensure tests pass
+pnpm test
+
+# Build all packages
+pnpm build
+
+# Check formatting
+pnpm format
+```
+
+### 2. Create Pull Request
+1. Push final changes
+2. Create PR through GitHub
+3. Fill PR template
+4. Request reviews
+5. Address feedback
+
+### 3. Merge Process
+1. Get approvals
+2. Pass CI checks
+3. Update CHANGELOG
+4. Squash and merge
+5. Delete branch
+
+## Production Release
+
+### 1. Version Update
+```bash
+# Update version
+pnpm version minor
+
+# Update CHANGELOG
+vim CHANGELOG.md
+```
+
+### 2. Release Branch
+```bash
+# Create release branch
+git checkout -b release/v1.1.0
+
+# Build and test
+pnpm build
+pnpm test
+```
+
+### 3. Documentation
+```bash
+# Generate final docs
+pnpm docs:generate
+
+# Update versions
+vim docs/versions.json
+
+# Build docs site
+pnpm docs:build
+```
+
+### 4. Release Process
+1. Merge to master
+2. Create release tag
+3. Deploy to production
+4. Monitor metrics
+5. Update documentation
+
+## Best Practices
+
+### Code Review Guidelines
+1. Review all changed files
+2. Check test coverage
+3. Verify documentation
+4. Test locally
+5. Consider security
+
+### Workflow Tips
+1. Keep branches short-lived
+2. Update from develop regularly
+3. Write clear commit messages
+4. Document as you go
+5. Tag milestones appropriately
+
+### Common Pitfalls
+1. Long-running branches
+2. Missing documentation
+3. Incomplete testing
+4. Unclear commit messages
+5. Skipped code review
+```
+
+The documentation is now organized into three main files:
+1. Repository Structure
+2. Development Tools
+3. Git and Development Workflows
+
+Each file has frontmatter for Gatsby and follows a clear, hierarchical structure. The Git workflows and example workflows have been combined into a single comprehensive guide that flows from basic concepts to practical examples.
+
+Would you like me to make any adjustments to this organization or the content?

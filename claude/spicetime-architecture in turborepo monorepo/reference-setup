@@ -1,0 +1,109 @@
+#!/bin/bash
+
+# Create reference examples directory structure
+mkdir -p spicetime-architecture/docs/examples/graphql/{schema,gateway,client}
+
+# Create reference schema file
+cat > spicetime-architecture/docs/examples/graphql/schema/reference-schema.graphql << EOL
+# This is a reference implementation demonstrating AI-aware permissions and auth
+# DO NOT USE DIRECTLY IN PRODUCTION
+
+$(cat << 'EOF'
+# Base types for the SpiceTime system
+scalar DateTime
+scalar JSON
+
+enum PermissionScope {
+  SYSTEM      # System-level operations
+  USER        # User-related operations
+  AGENT       # Agent-related operations
+  TASK        # Task-related operations
+  RESOURCE    # Resource-related operations
+  AI          # AI-specific operations
+}
+
+# [Rest of our schema implementation...]
+# Note: This is a reference example only
+EOF
+)
+EOL
+
+# Create gateway reference implementation
+cat > spicetime-architecture/docs/examples/graphql/gateway/auth-gateway-example.ts << EOL
+/**
+ * Reference implementation of an authentication-aware GraphQL gateway
+ * DO NOT USE DIRECTLY IN PRODUCTION
+ */
+
+$(cat << 'EOF'
+import { ApolloServer } from '@apollo/server';
+import { ApolloGateway, RemoteGraphQLDataSource } from '@apollo/gateway';
+import { startStandaloneServer } from '@apollo/server/standalone';
+
+// [Rest of our gateway implementation...]
+// Note: This is a reference example only
+EOF
+)
+EOL
+
+# Create client reference implementation
+cat > spicetime-architecture/docs/examples/graphql/client/client-implementation.ts << EOL
+/**
+ * Reference implementation of the GraphQL client setup
+ * DO NOT USE DIRECTLY IN PRODUCTION
+ */
+
+$(cat << 'EOF'
+import { ApolloClient, InMemoryCache, split, HttpLink } from '@apollo/client';
+import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
+
+// [Rest of our client implementation...]
+// Note: This is a reference example only
+EOF
+)
+EOL
+
+# Create a README for the examples
+cat > spicetime-architecture/docs/examples/graphql/README.md << EOL
+# SpiceTime GraphQL Reference Examples
+
+These examples demonstrate the implementation patterns for the SpiceTime GraphQL layer.
+They are for reference only and should not be used directly in production.
+
+## Contents
+
+### Schema (\`/schema\`)
+- AI-aware permission system
+- Role-based access control
+- Agent capabilities and trust boundaries
+
+### Gateway (\`/gateway\`)
+- Authentication implementation
+- Permission enforcement
+- Service composition
+
+### Client (\`/client\`)
+- Apollo client setup
+- Subscription handling
+- Authentication integration
+
+## Usage
+
+These examples should be used as reference material when implementing:
+1. GraphQL schema design
+2. Gateway authentication
+3. Client configuration
+
+## Important Notes
+
+- These are reference implementations only
+- Do not copy directly into production code
+- Use as guidance for actual implementations
+- Consider security implications
+- Update dependencies and security practices for production use
+
+EOL
+
+echo "✨ GraphQL reference examples created successfully!"
+echo "Location: spicetime-architecture/docs/examples/graphql/"
+echo "Please refer to the README.md for usage guidelines."

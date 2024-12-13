@@ -1,0 +1,80 @@
+# Feature Development Workflows
+
+## Direct Branch Development
+
+### 1. Create and Push Feature Branch
+```bash
+# Create and switch to new branch
+git checkout develop
+git pull origin develop
+git checkout -b feature/auth-service-jwt
+
+# Push branch to remote
+git push -u origin feature/auth-service-jwt
+```
+
+### 2. Development Workflow
+```bash
+# Make changes
+git add .
+git commit -m "feat(auth): implement authentication service"
+
+# Push changes regularly
+git push
+
+# Tag significant milestones
+git commit -m "feat(auth): complete JWT implementation
+
+[milestone]"
+git push
+```
+
+## Pull Request Workflow (Optional)
+
+If you want to get early feedback or signal work in progress:
+
+1. Push your branch as above
+2. Create PR through GitHub and mark as draft
+3. Continue development
+4. Mark PR as ready when complete
+
+## Common Development Patterns
+
+### Start New Feature
+```bash
+# Create local branch
+git checkout develop
+git pull
+git checkout -b feature/my-feature
+
+# Push to remote
+git push -u origin feature/my-feature
+
+# Start development
+mkdir -p monorepo/packages/services/my-service
+cd monorepo/packages/services/my-service
+pnpm init
+```
+
+### Regular Development
+```bash
+# Code changes
+pnpm test
+git add .
+git commit -m "feat(scope): description"
+git push
+
+# Create PR when ready for review
+# (Optional - can be done at any time)
+```
+
+### Development Complete
+```bash
+# Final tests and checks
+pnpm test
+pnpm build
+pnpm lint
+
+# Create PR if not done earlier
+# or mark existing PR as ready for review
+```

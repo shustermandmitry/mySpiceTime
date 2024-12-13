@@ -1,0 +1,42 @@
+<svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+  <!-- Main Frame Rails -->
+  <rect x="100" y="100" width="600" height="50" fill="none" stroke="black" stroke-width="2"/>
+  <rect x="100" y="350" width="600" height="50" fill="none" stroke="black" stroke-width="2"/>
+  
+  <!-- Cross Members -->
+  <rect x="100" y="100" width="50" height="300" fill="none" stroke="black" stroke-width="2"/>
+  <rect x="375" y="100" width="50" height="300" fill="none" stroke="black" stroke-width="2"/>
+  <rect x="650" y="100" width="50" height="300" fill="none" stroke="black" stroke-width="2"/>
+  
+  <!-- Tongue -->
+  <path d="M100 225 L-50 225 L-50 275 L100 275" fill="none" stroke="black" stroke-width="2"/>
+  
+  <!-- Axle -->
+  <line x1="300" y1="80" x2="300" y2="420" stroke="#666" stroke-width="3" stroke-dasharray="5,5"/>
+  
+  <!-- Spring Mounts -->
+  <rect x="270" y="150" width="60" height="20" fill="none" stroke="black" stroke-width="2"/>
+  <rect x="270" y="330" width="60" height="20" fill="none" stroke="black" stroke-width="2"/>
+  
+  <!-- Dimensions -->
+  <line x1="100" y1="50" x2="700" y2="50" stroke="#444" stroke-width="1" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+  <text x="400" y="40" text-anchor="middle" font-family="Arial" font-size="14">96" (8ft)</text>
+  
+  <line x1="50" y1="100" x2="50" y2="400" stroke="#444" stroke-width="1" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+  <text x="35" y="250" text-anchor="middle" font-family="Arial" font-size="14" transform="rotate(-90 35 250)">48" (4ft)</text>
+  
+  <!-- Markers -->
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5"
+        markerWidth="6" markerHeight="6"
+        orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#444"/>
+    </marker>
+  </defs>
+  
+  <!-- Labels -->
+  <text x="400" y="470" text-anchor="middle" font-family="Arial" font-size="16">Basic Trailer Frame - Top View</text>
+  <text x="150" y="200" font-family="Arial" font-size="12">2"×3" Steel Tube</text>
+  <text x="-40" y="260" font-family="Arial" font-size="12">Tongue</text>
+  <text x="310" y="250" font-family="Arial" font-size="12">Axle</text>
+</svg>

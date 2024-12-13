@@ -1,0 +1,378 @@
+# SpiceTime Architecture Onboarding Guide
+
+## Table of Contents
+1. [Repository Structure](#repository-structure)
+2. [Development Tools](#development-tools)
+3. [Git Workflow](#git-workflow)
+4. [Documentation System](#documentation-system)
+5. [Package Development Guide](#package-development-guide)
+6. [Example Workflow](#example-workflow)
+
+## Repository Structure
+
+```
+spicetime-architecture/
+├── docs/                           # Project documentation
+│   ├── .generated/                 # Auto-generated documentation
+│   ├── architecture/               # Architecture documentation
+│   │   ├── diagrams/              # Architecture diagrams
+│   │   └── decisions/             # Architecture decisions
+│   └── api/                       # API documentation
+├── monorepo/                      # Main monorepo structure
+│   ├── packages/                  # Project packages
+│   │   ├── services/             # Backend services
+│   │   └── clients/              # Frontend applications
+│   ├── internal/                 # Internal shared packages
+│   │   ├── core/                # Core utilities
+│   │   └── graphql/             # GraphQL schemas
+│   └── tools/                   # Development tools
+└── website/                      # Documentation website
+    └── docs/                    # Gatsby documentation site
+```
+
+### Key Directories Explained
+
+- `docs/`: Contains all project documentation
+  - `.generated/`: Auto-generated API docs, type definitions
+  - `architecture/`: System design and decisions
+  - `api/`: API specifications and guides
+
+- `monorepo/`: Main project code
+  - `packages/`: Main project packages
+    - `services/`: Backend microservices
+    - `clients/`: Frontend applications
+  - `internal/`: Shared internal packages
+  - `tools/`: Build and development tools
+
+## Development Tools
+
+### Required Tools
+1. Node.js (>= 18.0.0)
+2. PNPM (>= 9.14.4)
+3. Git (>= 2.30.0)
+4. Docker (>= 20.10.0)
+
+### Setup Instructions
+
+```bash
+# Install Node.js using nvm
+nvm install 18
+nvm use 18
+
+# Install PNPM
+npm install -g pnpm@9.14.4
+
+# Clone repository
+git clone https://github.com/your-org/spicetime-architecture.git
+cd spicetime-architecture
+
+# Install dependencies
+pnpm install
+
+# Setup git hooks
+pnpm prepare
+```
+
+### Development Commands
+
+```bash
+# Start development servers
+pnpm dev
+
+# Build all packages
+pnpm build
+
+# Run tests
+pnpm test
+
+# Lint code
+pnpm lint
+
+# Generate documentation
+pnpm docs:generate
+```
+
+## Git Workflow
+
+### Branch Structure
+
+```
+master
+  └── develop
+      ├── feature/auth-service
+      ├── feature/graphql-gateway
+      └── feature/web-client
+```
+
+- `master`: Production-ready code
+- `develop`: Integration branch for features
+- `feature/*`: Feature development branches
+- `release/*`: Release preparation branches
+- `hotfix/*`: Production hotfix branches
+
+### Branch Naming Convention
+
+```
+feature/[package-name]-[feature-name]
+release/v[major].[minor].[patch]
+hotfix/[issue-number]-[description]
+```
+
+Examples:
+- `feature/auth-service-jwt`
+- `release/v1.2.0`
+- `hotfix/123-fix-memory-leak`
+
+### Commit Message Format
+
+```
+type(scope): description
+
+[optional body]
+
+[optional footer]
+```
+
+Types:
+- `feat`: New feature
+- `fix`: Bug fix
+- `docs`: Documentation changes
+- `style`: Code style changes
+- `refactor`: Code refactoring
+- `test`: Adding/updating tests
+- `chore`: Build process/tools
+
+Examples:
+```
+feat(auth): implement JWT authentication
+fix(api): resolve memory leak in connection pool
+docs(onboarding): update setup instructions
+```
+
+### Creating a Feature Branch
+
+```bash
+# Create and switch to new feature branch
+git checkout develop
+git pull origin develop
+git checkout -b feature/auth-service-jwt
+
+# Make changes and commit
+git add .
+git commit -m "feat(auth): implement JWT authentication"
+
+# Push branch
+git push -u origin feature/auth-service-jwt
+```
+
+### Milestone Management
+
+1. Tag milestone commits:
+```bash
+git commit -m "feat(auth): complete JWT implementation
+
+[milestone]"
+```
+
+2. Update documentation when milestone is tagged
+3. Create pull request to develop branch
+4. Request review from team leads
+
+## Documentation System
+
+### Documentation Types
+
+1. Code Documentation
+   - TypeScript interfaces/types
+   - JSDoc comments
+   - README files in packages
+
+2. API Documentation
+   - GraphQL schema documentation
+   - REST API specifications
+   - Authentication flows
+
+3. Architecture Documentation
+   - System diagrams
+   - Decision records
+   - Component interactions
+
+### Documentation Generation
+
+```bash
+# Generate all documentation
+pnpm docs:generate
+
+# Generate specific documentation
+pnpm docs:generate:api
+pnpm docs:generate:graphql
+pnpm docs:generate:diagrams
+
+# Validate documentation
+pnm docs:validate
+
+# Start documentation site locally
+pnpm docs:dev
+```
+
+### Documentation Location Rules
+
+1. Package Documentation
+   - Lives in package's `docs/` directory
+   - Includes README.md and API docs
+   - Examples in `docs/examples/`
+
+2. Architecture Documentation
+   - Lives in root `docs/architecture/`
+   - Follows ADR format
+   - Includes C4 diagrams
+
+3. API Documentation
+   - Lives in `docs/api/`
+   - Generated from GraphQL schema
+   - OpenAPI specifications
+
+## Package Development Guide
+
+### Creating a New Package
+
+1. Create package directory:
+```bash
+mkdir -p monorepo/packages/services/my-service
+cd monorepo/packages/services/my-service
+```
+
+2. Initialize package:
+```bash
+pnpm init
+```
+
+3. Add to workspace:
+```yaml
+# pnpm-workspace.yaml
+packages:
+  - 'monorepo/packages/services/*'
+```
+
+4. Create basic structure:
+```
+my-service/
+├── src/
+│   └── index.ts
+├── tests/
+│   └── index.test.ts
+├── docs/
+│   └── README.md
+└── package.json
+```
+
+5. Configure TypeScript:
+```json
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "./src"
+  },
+  "include": ["src"]
+}
+```
+
+### Development Workflow
+
+1. Start development:
+```bash
+# In package directory
+pnpm dev
+```
+
+2. Run tests:
+```bash
+pnpm test
+```
+
+3. Build package:
+```bash
+pnpm build
+```
+
+4. Document changes:
+```bash
+# Update package documentation
+pnpm docs:generate
+```
+
+## Example Workflow
+
+### Creating a New Authentication Service
+
+1. Create feature branch:
+```bash
+git checkout develop
+git checkout -b feature/auth-service-jwt
+```
+
+2. Create package structure:
+```bash
+mkdir -p monorepo/packages/services/auth
+cd monorepo/packages/services/auth
+```
+
+3. Initialize package:
+```bash
+pnpm init
+```
+
+4. Create source files:
+```typescript
+// src/index.ts
+export interface AuthService {
+  authenticate(credentials: Credentials): Promise<AuthToken>;
+  validate(token: string): Promise<boolean>;
+}
+
+// src/jwt.ts
+import jwt from 'jsonwebtoken';
+
+export class JWTAuthService implements AuthService {
+  // Implementation
+}
+```
+
+5. Add documentation:
+```markdown
+# Authentication Service
+
+JWT-based authentication service for SpiceTime.
+
+## Usage
+```typescript
+import { JWTAuthService } from '@spicetime/auth';
+
+const auth = new JWTAuthService({
+  secret: process.env.JWT_SECRET
+});
+```
+
+6. Commit changes:
+```bash
+git add .
+git commit -m "feat(auth): implement JWT authentication service
+
+Adds JWT-based authentication service with token generation and validation.
+
+[milestone]"
+```
+
+7. Push and create PR:
+```bash
+git push -u origin feature/auth-service-jwt
+# Create PR through GitHub interface
+```
+
+This example demonstrates:
+- Proper branch creation
+- Package structure setup
+- Documentation requirements
+- Commit message format
+- Milestone tagging

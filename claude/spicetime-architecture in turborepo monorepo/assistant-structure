@@ -1,0 +1,155 @@
+# Core Assistant Structure
+
+```
+monorepo/internal/core/assistant/
+├── src/
+│   ├── types/
+│   │   ├── index.ts             # Type exports
+│   │   ├── assistant.ts         # Assistant types
+│   │   └── context.ts          # Context types
+│   ├── services/
+│   │   ├── index.ts             # Service exports
+│   │   ├── assistantService.ts  # Core assistant logic
+│   │   └── contextService.ts    # Context management
+│   ├── utils/
+│   │   ├── index.ts             # Utility exports
+│   │   └── prompts.ts          # Prompt handling
+│   └── index.ts                 # Main package entry
+├── tests/
+│   ├── services/
+│   │   ├── assistantService.test.ts
+│   │   └── contextService.test.ts
+│   └── utils/
+│       └── prompts.test.ts
+├── docs/
+│   ├── README.md               # Package documentation
+│   ├── api.md                 # API documentation
+│   └── examples/
+│       └── basic-usage.md
+├── package.json
+├── tsconfig.json
+└── vitest.config.ts
+
+# Telegram Integration Structure
+
+monorepo/packages/services/assistant-telegram/
+├── src/
+│   ├── types/
+│   │   ├── index.ts            # Type exports
+│   │   ├── commands.ts         # Command types
+│   │   └── messages.ts         # Message types
+│   ├── handlers/
+│   │   ├── index.ts            # Handler exports
+│   │   ├── commandHandler.ts   # Command processing
+│   │   └── messageHandler.ts   # Message processing
+│   ├── services/
+│   │   ├── index.ts            # Service exports
+│   │   ├── botService.ts       # Telegram bot service
+│   │   └── sessionService.ts   # Session management
+│   ├── utils/
+│   │   ├── index.ts            # Utility exports
+│   │   ├── formatting.ts       # Message formatting
+│   │   └── validation.ts       # Input validation
+│   └── index.ts                # Main entry point
+├── tests/
+│   ├── handlers/
+│   │   ├── commandHandler.test.ts
+│   │   └── messageHandler.test.ts
+│   ├── services/
+│   │   ├── botService.test.ts
+│   │   └── sessionService.test.ts
+│   └── utils/
+│       ├── formatting.test.ts
+│       └── validation.test.ts
+├── docs/
+│   ├── README.md              # Package documentation
+│   ├── commands.md           # Command documentation
+│   └── deployment.md         # Deployment guide
+├── package.json
+├── tsconfig.json
+└── vitest.config.ts
+```
+
+Key Package Files:
+
+## Core Assistant package.json
+```json
+{
+  "name": "@spicetime/assistant",
+  "version": "0.1.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts",
+    "dev": "tsup src/index.ts --format esm,cjs --watch --dts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint src",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "tsup": "^7.2.0",
+    "typescript": "^5.2.2",
+    "vitest": "^0.34.6",
+    "@types/node": "^20.8.0"
+  }
+}
+```
+
+## Telegram Integration package.json
+```json
+{
+  "name": "@spicetime/assistant-telegram",
+  "version": "0.1.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts",
+    "dev": "tsup src/index.ts --format esm,cjs --watch --dts",
+    "start": "node dist/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint src",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@spicetime/assistant": "workspace:*",
+    "telegraf": "^4.15.0",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "tsup": "^7.2.0",
+    "typescript": "^5.2.2",
+    "vitest": "^0.34.6",
+    "@types/node": "^20.8.0"
+  }
+}
+```
+
+Key aspects of this structure:
+
+1. Core Assistant:
+   - Focused on core assistant logic
+   - Type definitions for shared interfaces
+   - Context management
+   - Prompt handling utilities
+
+2. Telegram Integration:
+   - Builds on core assistant
+   - Command and message handling
+   - Telegram-specific formatting
+   - Session management
+   - Bot service implementation
+
+3. Both packages:
+   - Clear separation of concerns
+   - Comprehensive testing structure
+   - Documentation for different aspects
+   - Type safety with TypeScript
+   - Fast builds with tsup
+   - Testing with vitest
+
+Would you like me to detail any specific part of either package structure?

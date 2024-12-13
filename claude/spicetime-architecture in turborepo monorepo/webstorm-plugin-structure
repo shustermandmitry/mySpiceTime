@@ -1,0 +1,149 @@
+```
+monorepo/tools/code-assistant/
+├── src/
+│   ├── main/
+│   │   ├── kotlin/                    # Kotlin source files
+│   │   │   └── com/spicetime/assistant/
+│   │   │       ├── actions/           # Plugin actions
+│   │   │       │   ├── GenerateAction.kt
+│   │   │       │   └── ConfigureAction.kt
+│   │   │       ├── services/          # Plugin services
+│   │   │       │   ├── AssistantService.kt
+│   │   │       │   └── ConfigService.kt
+│   │   │       ├── ui/               # UI components
+│   │   │       │   ├── AssistantToolWindow.kt
+│   │   │       │   └── SettingsPanel.kt
+│   │   │       └── SpicetimeAssistantPlugin.kt
+│   │   └── resources/
+│   │       ├── META-INF/
+│   │       │   └── plugin.xml        # Plugin configuration
+│   │       └── icons/               # Plugin icons
+│   └── test/
+│       └── kotlin/
+│           └── com/spicetime/assistant/
+│               └── services/
+│                   └── AssistantServiceTest.kt
+├── gradle/
+│   └── wrapper/
+│       ├── gradle-wrapper.jar
+│       └── gradle-wrapper.properties
+├── docs/
+│   ├── README.md                     # Plugin documentation
+│   ├── installation.md              # Installation guide
+│   └── development.md               # Development guide
+├── build.gradle.kts                 # Gradle build script
+├── gradlew                          # Gradle wrapper script
+├── gradlew.bat                      # Gradle wrapper script (Windows)
+└── settings.gradle.kts              # Gradle settings
+```
+
+build.gradle.kts:
+```kotlin
+plugins {
+    id("java")
+    id("org.jetbrains.kotlin.jvm") version "1.8.21"
+    id("org.jetbrains.intellij") version "1.13.3"
+}
+
+group = "com.spicetime"
+version = "1.0-SNAPSHOT"
+
+repositories {
+    mavenCentral()
+}
+
+// Configure Gradle IntelliJ Plugin
+intellij {
+    version.set("2023.2")
+    type.set("IU") // Ultimate Edition
+    plugins.set(listOf("java"))
+}
+
+tasks {
+    // Set the JVM compatibility versions
+    withType<JavaCompile> {
+        sourceCompatibility = "17"
+        targetCompatibility = "17"
+    }
+    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        kotlinOptions.jvmTarget = "17"
+    }
+
+    patchPluginXml {
+        sinceBuild.set("232")
+        untilBuild.set("233.*")
+    }
+
+    signPlugin {
+        certificateChain.set(System.getenv("CERTIFICATE_CHAIN"))
+        privateKey.set(System.getenv("PRIVATE_KEY"))
+        password.set(System.getenv("PRIVATE_KEY_PASSWORD"))
+    }
+
+    publishPlugin {
+        token.set(System.getenv("PUBLISH_TOKEN"))
+    }
+}
+```
+
+plugin.xml:
+```xml
+<idea-plugin>
+    <id>com.spicetime.code-assistant</id>
+    <name>SpiceTime Code Assistant</name>
+    <vendor>SpiceTime</vendor>
+    <description>AI-powered code assistant for SpiceTime development</description>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.java</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow id="SpiceTime Assistant" 
+                   secondary="true" 
+                   icon="/icons/spicetime.svg" 
+                   anchor="right"
+                   factoryClass="com.spicetime.assistant.ui.AssistantToolWindowFactory"/>
+        <applicationService
+                serviceImplementation="com.spicetime.assistant.services.AssistantService"/>
+        <applicationConfigurable
+                instance="com.spicetime.assistant.ui.SettingsConfigurable"/>
+    </extensions>
+
+    <actions>
+        <action id="SpiceTime.GenerateCode" 
+                class="com.spicetime.assistant.actions.GenerateAction" 
+                text="Generate Code" 
+                description="Generate code using SpiceTime Assistant">
+            <add-to-group group-id="GenerateGroup" anchor="last"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl G"/>
+        </action>
+    </actions>
+</idea-plugin>
+```
+
+This structure:
+1. Uses Kotlin for IntelliJ plugin development
+2. Includes Gradle build system with IntelliJ plugin
+3. Provides proper plugin configuration via plugin.xml
+4. Organizes code into actions, services, and UI components
+5. Includes documentation and testing setup
+
+To start development:
+```bash
+# Create feature branch
+git checkout -b feature/tools-code-assistant-init
+
+# Create plugin directory
+mkdir -p monorepo/tools/code-assistant
+cd monorepo/tools/code-assistant
+
+# Initialize Gradle project with the structure above
+# Copy build.gradle.kts and other config files
+
+# Initial commit
+git add .
+git commit -m "feat(tools): initialize code assistant plugin structure"
+git push -u origin feature/tools-code-assistant-init
+```
+
+Would you like me to show any specific implementation details or explain more about the plugin architecture?

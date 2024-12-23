@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 800 1000" xmlns="http://www.w3.org/2000/svg">
+    <!-- Decorative Border -->
+    <rect x="20" y="20" width="760" height="960" fill="none"
+          stroke="#2b4"
+          stroke-width="8"
+          stroke-dasharray="30 10"/>
+
+    <!-- Inner Border -->
+    <rect x="40" y="40" width="720" height="920" fill="none"
+          stroke="#2b4"
+          stroke-width="2"/>
+
+    <!-- Title -->
+    <text x="400" y="120"
+          font-family="Arial Black, sans-serif"
+          font-size="48"
+          text-anchor="middle"
+          fill="#2b4">KARMA JUICE
+    </text>
+
+    <!-- Subtitle -->
+    <text x="400" y="170"
+          font-family="Arial, sans-serif"
+          font-size="24"
+          text-anchor="middle"
+          fill="#444">Community Brew Share
+    </text>
+
+    <!-- Main Text -->
+    <text x="100" y="280"
+          font-family="Arial, sans-serif"
+          font-size="24"
+          fill="#333">Take what you'd like
+    </text>
+
+    <text x="100" y="340"
+          font-family="Arial, sans-serif"
+          font-size="24"
+          fill="#333">Cover costs → [batch price]
+    </text>
+
+    <!-- JAH JAR section -->
+    <text x="400" y="450"
+          font-family="Arial Black, sans-serif"
+          font-size="36"
+          text-anchor="middle"
+          fill="#2b4">THE JAH JAR
+    </text>
+
+    <text x="400" y="500"
+          font-family="Arial, sans-serif"
+          font-size="22"
+          text-anchor="middle"
+          fill="#444">Suggested donation → [amount]
+    </text>
+
+    <text x="400" y="550"
+          font-family="Arial, sans-serif"
+          font-size="20"
+          text-anchor="middle"
+          fill="#444">Supporting:
+    </text>
+
+    <text x="400" y="590"
+          font-family="Arial, sans-serif"
+          font-size="20"
+          text-anchor="middle"
+          fill="#444">• eBikes for Justice
+    </text>
+
+    <text x="400" y="630"
+          font-family="Arial, sans-serif"
+          font-size="20"
+          text-anchor="middle"
+          fill="#444">• Community Food Programs
+    </text>
+
+    <text x="400" y="670"
+          font-family="Arial, sans-serif"
+          font-size="20"
+          text-anchor="middle"
+          fill="#444">• Future Brewing Equipment
+    </text>
+
+    <!-- Bottom Section -->
+    <text x="400" y="800"
+          font-family="Arial, sans-serif"
+          font-size="20"
+          text-anchor="middle"
+          fill="#444">Join our community:
+    </text>
+
+    <text x="400" y="840"
+          font-family="Arial, sans-serif"
+          font-size="20"
+          text-anchor="middle"
+          fill="#444">[Telegram Link]
+    </text>
+
+    <!-- Footer -->
+    <text x="400" y="920"
+          font-family="Arial, sans-serif"
+          font-size="16"
+          text-anchor="middle"
+          font-style="italic"
+          fill="#666">Made with ♥️ by eBikes for Justice Nonprofit
+    </text>
+</svg>

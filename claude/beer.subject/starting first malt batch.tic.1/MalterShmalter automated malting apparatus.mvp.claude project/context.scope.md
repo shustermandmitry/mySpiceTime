@@ -1,0 +1,2 @@
+malting guide, to base automation from
+https://github.com/shustermandmitry/spicetime-architecture/blob/448621b0567240210895c8a11dfc650f2b589773/docs/ideas-dumpster/BeerReceipe%20component.claud.chat/malting%20first%20batch.got%20the%20ingredients.tic.1/malting-guide.no%20automation.md

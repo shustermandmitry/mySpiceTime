@@ -1,0 +1,74 @@
+<svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+    <!-- Control Box -->
+    <g transform="translate(50,50)">
+        <!-- Box outline -->
+        <rect x="0" y="0" width="300" height="200" fill="#f5f5f5" stroke="black"/>
+
+        <!-- Components -->
+        <!-- Arduino -->
+        <rect x="20" y="20" width="60" height="40" fill="#99ff99" stroke="black"/>
+        <text x="25" y="45" font-size="10">Arduino</text>
+
+        <!-- Relay Module -->
+        <rect x="100" y="20" width="80" height="40" fill="#ff9999" stroke="black"/>
+        <text x="105" y="45" font-size="10">4ch Relay</text>
+
+        <!-- LCD -->
+        <rect x="20" y="80" width="160" height="40" fill="#9999ff" stroke="black"/>
+        <text x="70" y="105" font-size="10">LCD 16x2</text>
+
+        <!-- Sensors -->
+        <rect x="200" y="20" width="40" height="40" fill="#ffff99" stroke="black"/>
+        <text x="205" y="35" font-size="8">DHT22</text>
+        <rect x="250" y="20" width="40" height="40" fill="#ffff99" stroke="black"/>
+        <text x="255" y="35" font-size="8">MQ135</text>
+
+        <!-- Connectors -->
+        <g transform="translate(0,160)">
+            <rect x="20" y="0" width="20" height="20" fill="#ccc" stroke="black"/>
+            <rect x="50" y="0" width="20" height="20" fill="#ccc" stroke="black"/>
+            <rect x="80" y="0" width="20" height="20" fill="#ccc" stroke="black"/>
+            <rect x="110" y="0" width="20" height="20" fill="#ccc" stroke="black"/>
+            <text x="140" y="15" font-size="10">RJ45 Jacks</text>
+        </g>
+    </g>
+
+    <!-- Connection Diagram -->
+    <g transform="translate(400,50)">
+
+        <!-- Push Engine -->
+        <rect x="0" y="0" width="120" height="80" fill="none" stroke="black"/>
+        <text x="10" y="45" font-size="12">Push Engine</text>
+
+        <!-- Devices -->
+        <g transform="translate(130,10)">
+            <rect x="0" y="0" width="80" height="20" fill="none" stroke="black"/>
+            <text x="5" y="15" font-size="10">Heater</text>
+            <rect x="0" y="30" width="80" height="20" fill="none" stroke="black"/>
+            <text x="5" y="45" font-size="10">Humidifier</text>
+            <rect x="0" y="60" width="80" height="20" fill="none" stroke="black"/>
+            <text x="5" y="75" font-size="10">Fan</text>
+        </g>
+
+        <!-- Pull Engine -->
+        <rect x="0" y="120" width="120" height="80" fill="none" stroke="black"/>
+        <text x="10" y="165" font-size="12">Pull Engine</text>
+        <!-- Devices -->
+        <rect x="130" y="150" width="80" height="20" fill="none" stroke="black"/>
+        <text x="135" y="165" font-size="10">Fan</text>
+    </g>
+
+    <!-- Wiring Notes -->
+    <g transform="translate(50,300)">
+        <text x="0" y="0" font-size="14">Components List:</text>
+        <text x="20" y="25" font-size="12">1. Arduino Nano (~$3)</text>
+        <text x="20" y="45" font-size="12">2. 4ch Relay Module ($2)</text>
+        <text x="20" y="65" font-size="12">3. LCD 16x2 + I2C ($3)</text>
+        <text x="20" y="85" font-size="12">4. DHT22 Sensor ($2)</text>
+        <text x="20" y="105" font-size="12">5. MQ135 VOC Sensor ($2)</text>
+        <text x="20" y="125" font-size="12">6. Project Box ($2)</text>
+        <text x="20" y="145" font-size="12">7. RJ45 Jacks + Cable ($2)</text>
+        <text x="20" y="165" font-size="12">Total: ~$16</text>
+    </g>
+</svg>
+

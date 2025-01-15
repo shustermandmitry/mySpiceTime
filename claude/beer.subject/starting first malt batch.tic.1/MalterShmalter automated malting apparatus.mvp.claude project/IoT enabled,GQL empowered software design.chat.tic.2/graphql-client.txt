@@ -1,0 +1,162 @@
+// src/client/MaltingClient.ts
+import { 
+  ApolloClient, 
+  InMemoryCache, 
+  split, 
+  HttpLink,
+  ApolloLink 
+} from '@apollo/client';
+import { getMainDefinition } from '@apollo/client/utilities';
+import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
+import { createClient } from 'graphql-ws';
+import { DeviceManager } from '../managers/DeviceManager';
+
+export class MaltingClient {
+  private apolloClient: ApolloClient<any>;
+  private deviceManager?: DeviceManager;
+  private mode: 'standalone' | 'remote';
+
+  constructor(options: {
+    mode: 'standalone' | 'remote',
+    serverUrl?: string,
+    wsUrl?: string,
+    deviceManager?: DeviceManager
+  }) {
+    this.mode = options.mode;
+    this.deviceManager = options.deviceManager;
+
+    if (this.mode === 'remote') {
+      if (!options.serverUrl || !options.wsUrl) {
+        throw new Error('Server and WebSocket URLs required for remote mode');
+      }
+      
+      this.apolloClient = this.createRemoteClient(
+        options.serverUrl, 
+        options.wsUrl
+      );
+    } else {
+      if (!this.deviceManager) {
+        throw new Error('DeviceManager required for standalone mode');
+      }
+      
+      this.apolloClient = this.createLocalClient();
+    }
+  }
+
+  private createRemoteClient(serverUrl: string, wsUrl: string) {
+    const httpLink = new HttpLink({
+      uri: serverUrl
+    });
+
+    const wsLink = new GraphQLWsLink(createClient({
+      url: wsUrl,
+    }));
+
+    const splitLink = split(
+      ({ query }) => {
+        const definition = getMainDefinition(query);
+        return (
+          definition.kind === 'OperationDefinition' &&
+          definition.operation === 'subscription'
+        );
+      },
+      wsLink,
+      httpLink
+    );
+
+    return new ApolloClient({
+      link: splitLink,
+      cache: new InMemoryCache()
+    });
+  }
+
+  private createLocalClient() {
+    // Create an Apollo Link that resolves locally using DeviceManager
+    const localLink = new ApolloLink((operation) => {
+      // Implement local resolution logic here
+      return new Observable((observer) => {
+        const { query, variables } = operation;
+        try {
+          const result = this.resolveLocally(query, variables);
+          observer.next(result);
+          observer.complete();
+        } catch (error) {
+          observer.error(error);
+        }
+      });
+    });
+
+    return new ApolloClient({
+      link: localLink,
+      cache: new InMemoryCache()
+    });
+  }
+
+  private resolveLocally(query: any, variables: any) {
+    // Implement local resolution using deviceManager
+    // This is a simplified example
+    const queryType = query.definitions[0].operation;
+    const selections = query.definitions[0].selectionSet.selections;
+    
+    if (queryType === 'query') {
+      return this.resolveLocalQuery(selections[0], variables);
+    } else if (queryType === 'mutation') {
+      return this.resolveLocalMutation(selections[0], variables);
+    }
+  }
+
+  private resolveLocalQuery(selection: any, variables: any) {
+    const fieldName = selection.name.value;
+    
+    switch (fieldName) {
+      case 'devices':
+        return { data: { devices: this.deviceManager?.getAllDevices() } };
+      case 'device':
+        return { 
+          data: { 
+            device: this.deviceManager?.getDevice(variables.id) 
+          } 
+        };
+      // Add other query resolvers
+    }
+  }
+
+  private resolveLocalMutation(selection: any, variables: any) {
+    const fieldName = selection.name.value;
+    
+    switch (fieldName) {
+      case 'setDeviceControl':
+        return { 
+          data: { 
+            setDeviceControl: this.deviceManager?.getDevice(variables.id)
+              ?.setControl(variables.control) 
+          } 
+        };
+      // Add other mutation resolvers
+    }
+  }
+
+  // Public API methods that work in both modes
+  async getDevices() {
+    const result = await this.apolloClient.query({
+      query: gql`
+        query GetDevices {
+          devices {
+            id
+            name
+            status {
+              connected
+              currentOperation
+            }
+          }
+        }
+      `
+    });
+    return result.data.devices;
+  }
+
+  async setDeviceControl(deviceId: string, control: any) {
+    const result = await this.apolloClient.mutate({
+      mutation: gql`
+        mutation SetControl($id: ID!, $control: ControlInput!) {
+          setDeviceControl(id: $id,

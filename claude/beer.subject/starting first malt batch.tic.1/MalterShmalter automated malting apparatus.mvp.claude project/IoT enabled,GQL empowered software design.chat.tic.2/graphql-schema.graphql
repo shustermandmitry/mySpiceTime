@@ -1,0 +1,163 @@
+// schema.graphql
+type Device {
+  id: ID!
+  name: String!
+  status: DeviceStatus!
+  currentStage: MaltingStage!
+  sensors: SensorReadings!
+  controls: Controls!
+  config: DeviceConfig!
+}
+
+type DeviceStatus {
+  connected: Boolean!
+  lastSeen: String!
+  currentOperation: String
+  alerts: [Alert!]
+  errors: [String!]
+}
+
+type SensorReadings {
+  temperature: Float!
+  humidity: Float!
+  grainMoisture: Float!
+  co2Level: Float
+  lastUpdated: String!
+}
+
+type Controls {
+  fan: ControlState!
+  heater: ControlState!
+  humidifier: ControlState!
+}
+
+type ControlState {
+  running: Boolean!
+  power: Float!
+  autoMode: Boolean!
+}
+
+type DeviceConfig {
+  targetTemp: Float!
+  targetHumidity: Float!
+  targetMoisture: Float!
+  fanSpeedRange: Range!
+  alertThresholds: AlertThresholds!
+}
+
+type Range {
+  min: Float!
+  max: Float!
+}
+
+type AlertThresholds {
+  tempDelta: Float!
+  humidityDelta: Float!
+  moistureDelta: Float!
+}
+
+type Alert {
+  id: ID!
+  severity: AlertSeverity!
+  message: String!
+  timestamp: String!
+  acknowledged: Boolean!
+}
+
+enum AlertSeverity {
+  INFO
+  WARNING
+  ERROR
+}
+
+enum MaltingStage {
+  IDLE
+  STEEPING
+  GERMINATION
+  KILNING
+  COMPLETE
+}
+
+type Query {
+  devices: [Device!]!
+  device(id: ID!): Device
+  deviceStatus(id: ID!): DeviceStatus!
+  deviceAlerts(id: ID!, severity: AlertSeverity): [Alert!]!
+}
+
+type Mutation {
+  setDeviceControl(
+    id: ID!, 
+    control: ControlInput!
+  ): ControlState!
+  
+  updateDeviceConfig(
+    id: ID!, 
+    config: DeviceConfigInput!
+  ): DeviceConfig!
+  
+  acknowledgeAlert(
+    deviceId: ID!, 
+    alertId: ID!
+  ): Alert!
+  
+  startMaltingProcess(
+    deviceId: ID!, 
+    recipe: RecipeInput!
+  ): Device!
+  
+  stopMaltingProcess(
+    deviceId: ID!
+  ): Device!
+}
+
+type Subscription {
+  deviceUpdated(id: ID!): Device!
+  deviceAlert(id: ID!, severity: AlertSeverity): Alert!
+  sensorReadings(id: ID!): SensorReadings!
+}
+
+input ControlInput {
+  fan: ControlStateInput
+  heater: ControlStateInput
+  humidifier: ControlStateInput
+}
+
+input ControlStateInput {
+  running: Boolean
+  power: Float
+  autoMode: Boolean
+}
+
+input DeviceConfigInput {
+  targetTemp: Float
+  targetHumidity: Float
+  targetMoisture: Float
+  fanSpeedRange: RangeInput
+  alertThresholds: AlertThresholdsInput
+}
+
+input RangeInput {
+  min: Float!
+  max: Float!
+}
+
+input AlertThresholdsInput {
+  tempDelta: Float
+  humidityDelta: Float
+  moistureDelta: Float
+}
+
+input RecipeInput {
+  name: String!
+  steepingTime: Int!
+  germinationTemp: Float!
+  germinationHumidity: Float!
+  kilningProfile: [KilningStepInput!]!
+}
+
+input KilningStepInput {
+  temperature: Float!
+  duration: Int!
+  fanSpeed: Float!
+}

@@ -1,0 +1,23 @@
+// geometric_ops.c
+#include "mir.h"
+#include <emscripten.h>
+
+// Export functions to be called from JS
+EMSCRIPTEN_KEEPALIVE
+double* calculate_metric(double* point, int dimensions) {
+    MIR_context_t ctx = MIR_init();
+    // MIR implementation of metric calculation
+    // Returns pointer to metric tensor
+}
+
+EMSCRIPTEN_KEEPALIVE
+double calculate_field_gradient(double* point, int dimensions) {
+    MIR_context_t ctx = MIR_init();
+    // MIR implementation of field gradient
+}
+
+EMSCRIPTEN_KEEPALIVE
+void transform_space(double* from_coords, double* to_coords, int dimensions) {
+    MIR_context_t ctx = MIR_init();
+    // MIR implementation of space transformation
+}

@@ -1,0 +1,243 @@
+"""
+Core types and operations for the SpiceTime AI Assistant foundation
+"""
+
+# File System Operations
+type FileSystem {
+  """
+  Read file content from a path
+  """
+  readFile(path: String!): FileContent!
+
+  """
+  Write content to a file path
+  """
+  writeFile(path: String!, content: String!): WriteResult!
+
+  """
+  Check if path exists
+  """
+  exists(path: String!): Boolean!
+
+  """
+  List directory contents
+  """
+  listDir(path: String!): [FileInfo!]!
+
+  """
+  Get file metadata
+  """
+  stat(path: String!): FileInfo!
+}
+
+type FileContent {
+  path: String!
+  content: String!
+  encoding: String!
+}
+
+type FileInfo {
+  path: String!
+  name: String!
+  isDirectory: Boolean!
+  size: Int
+  modifiedAt: DateTime!
+}
+
+type WriteResult {
+  success: Boolean!
+  path: String!
+  error: String
+}
+
+# Context Aggregation
+type ContextAggregator {
+  """
+  Aggregate context from specified paths
+  """
+  aggregate(input: AggregateInput!): AggregateResult!
+
+  """
+  Get specific context by type
+  """
+  getContext(type: ContextType!): Context!
+
+  """
+  Subscribe to context changes
+  """
+  watchContext(type: ContextType!): ContextUpdate!
+}
+
+input AggregateInput {
+  paths: [String!]!
+  extensions: [String!]!
+  excludePatterns: [String!]
+  maxDepth: Int
+}
+
+type AggregateResult {
+  files: [FileContent!]!
+  errors: [String!]!
+}
+
+enum ContextType {
+  PROJECT_STRUCTURE
+  SOURCE_CODE
+  DOCUMENTATION
+  CONFIGURATION
+}
+
+type Context {
+  type: ContextType!
+  content: String!
+  metadata: JSON
+}
+
+type ContextUpdate {
+  type: ContextType!
+  changes: [ContextChange!]!
+  timestamp: DateTime!
+}
+
+type ContextChange {
+  path: String!
+  type: ChangeType!
+  content: String
+}
+
+enum ChangeType {
+  CREATED
+  MODIFIED
+  DELETED
+}
+
+# AI Model Access
+type AIService {
+  """
+  Send prompt to AI model
+  """
+  prompt(input: PromptInput!): PromptResult!
+
+  """
+  Stream responses for interactive sessions
+  """
+  stream(input: PromptInput!): PromptStream!
+
+  """
+  Get model capabilities
+  """
+  capabilities: AICapabilities!
+}
+
+input PromptInput {
+  prompt: String!
+  context: String
+  model: String
+  temperature: Float
+  maxTokens: Int
+}
+
+type PromptResult {
+  response: String!
+  usage: TokenUsage!
+  metadata: JSON
+}
+
+type PromptStream {
+  id: ID!
+  chunks: [ResponseChunk!]!
+  completed: Boolean!
+}
+
+type ResponseChunk {
+  text: String!
+  index: Int!
+}
+
+type TokenUsage {
+  prompt: Int!
+  completion: Int!
+  total: Int!
+}
+
+type AICapabilities {
+  maxTokens: Int!
+  models: [String!]!
+  features: [String!]!
+}
+
+# Root Types
+type Query {
+  fs: FileSystem!
+  context: ContextAggregator!
+  ai: AIService!
+}
+
+type Mutation {
+  """
+  Apply a patch to the file system
+  """
+  applyPatch(patch: PatchInput!): PatchResult!
+
+  """
+  Update context for specific type
+  """
+  updateContext(type: ContextType!, content: String!): Context!
+
+  """
+  Configure AI service
+  """
+  configureAI(config: AIConfig!): AICapabilities!
+}
+
+type Subscription {
+  """
+  Watch for file system changes
+  """
+  fileChanges(paths: [String!]): FileSystemEvent!
+
+  """
+  Watch for context updates
+  """
+  contextUpdates(types: [ContextType!]): ContextUpdate!
+
+  """
+  Stream AI responses
+  """
+  aiStream(id: ID!): ResponseChunk!
+}
+
+input PatchInput {
+  operations: [PatchOperation!]!
+  dryRun: Boolean
+}
+
+input PatchOperation {
+  type: PatchType!
+  path: String!
+  content: String
+}
+
+enum PatchType {
+  CREATE
+  UPDATE
+  DELETE
+}
+
+type PatchResult {
+  success: Boolean!
+  operations: [PatchOperation!]!
+  errors: [String!]!
+}
+
+input AIConfig {
+  model: String!
+  apiKey: String
+  options: JSON
+}
+
+type FileSystemEvent {
+  type: ChangeType!
+  path: String!
+  info: FileInfo
+}

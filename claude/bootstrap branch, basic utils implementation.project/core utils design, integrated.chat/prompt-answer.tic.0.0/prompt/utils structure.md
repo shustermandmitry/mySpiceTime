@@ -5,8 +5,9 @@ utils
   package.json
   tsconfig.js
   core
-    STA-error 
-    STA-scripts
+    sta-error 
+    sta-scripts
+    sta-package-builder
     aggregator
     patcher
     

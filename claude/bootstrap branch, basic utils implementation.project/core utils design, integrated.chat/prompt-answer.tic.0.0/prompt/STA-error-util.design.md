@@ -1,6 +1,4 @@
-all these utils need to be designed together
-let me outline my vision then we implement all of them in this chat
-they are too intertwined
+
 
 first sta-error
 it exposes STAError constructor that takes message as prop
@@ -20,7 +18,7 @@ it generates error object of shape
 }
 ```
 
-STAError class has a static func - createCustomError
+STAError class has a static func - createCustomErrorType
 it takes errorType:string and extention object that extends info on generated error
 both info and STAError are done by Object.create
 

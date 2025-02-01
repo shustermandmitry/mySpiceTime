@@ -1,0 +1,63 @@
+{
+  "name": "AdvancedDSL",
+  "description": "An advanced DSL with objects, arrays, inheritance, and functional verbs",
+  "variables": {
+    "@data": {
+      "description": "An example object with prototypical inheritance",
+      "value": {
+        "type": "object",
+        "properties": {
+          "name": "defaultName",
+          "type": "example",
+          "value": 42
+        },
+        "prototype": null
+      }
+    },
+    "@list": {
+      "description": "An array containing sample numbers",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    }
+  },
+  "commands": [
+    {
+      "verb": "add",
+      "description": "Add numbers or values in an array",
+      "arguments": [
+        "...nums"
+      ],
+      "options": {
+        "-s, --sum": "Sum all numbers (default: concatenate)"
+      },
+      "resolver": "function(...nums, options) { return options.sum ? nums.reduce((acc, n) => acc + n, 0) : nums.join(' '); }"
+    },
+    {
+      "verb": "extend",
+      "description": "Extend an object with additional properties",
+      "arguments": [
+        "target",
+        "prototype"
+      ],
+      "resolver": "function(target, prototype) { return Object.setPrototypeOf(target, prototype); }"
+    },
+    {
+      "verb": "mapValues",
+      "description": "Map values in an array using a verb",
+      "arguments": [
+        "@list",
+        "callback"
+      ],
+      "resolver": "function(list, callback) { return list.map(callback); }"
+    }
+  ],
+  "piping": {
+    "enabled": true,
+    "delimiter": "|"
+  }
+}

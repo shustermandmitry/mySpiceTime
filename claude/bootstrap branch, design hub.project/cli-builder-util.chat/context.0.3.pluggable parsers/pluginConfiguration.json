@@ -1,0 +1,29 @@
+{
+  "plugins": [
+    {
+      "name": "jsonPlugin",
+      "parser": "espree",
+      "commands": {
+        "parseJson": {
+          "arguments": [
+            "jsonData"
+          ],
+          "resolver": "jsonPlugin.parse"
+        }
+      }
+    },
+    {
+      "name": "customDSLPlugin",
+      "parser": "chevrotain",
+      "commands": {
+        "customCommand": {
+          "arguments": [
+            "arg1",
+            "arg2"
+          ],
+          "resolver": "customDSLPlugin.handleCommand"
+        }
+      }
+    }
+  ]
+}

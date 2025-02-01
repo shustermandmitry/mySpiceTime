@@ -1,0 +1,55 @@
+{
+  "name": "CLI-Builder",
+  "description": "A modular CLI system with pluggable parsers",
+  "plugins": [
+    {
+      "name": "jsonPlugin",
+      "parser": "espree",
+      "description": "Parses JSON-based CLI commands",
+      "commands": {
+        "parseJson": {
+          "arguments": [
+            "jsonData"
+          ],
+          "resolver": "jsonPlugin.parse"
+          // Forward to plugin resolver
+        }
+      }
+    },
+    {
+      "name": "customDSLPlugin",
+      "parser": "chevrotain",
+      "description": "Handles a custom DSL for advanced workflows",
+      "commands": {
+        "customCommand": {
+          "arguments": [
+            "arg1",
+            "arg2"
+          ],
+          "resolver": "customDSLPlugin.handleCommand"
+          // Plugin-specific logic
+        }
+      }
+    }
+  ],
+  "globalCommands": [
+    {
+      "verb": "add",
+      "arguments": [
+        "...nums"
+      ],
+      "resolver": "global.addNumbers"
+      // Base CLI resolver
+    },
+    {
+      "verb": "multiply",
+      "arguments": [
+        "a",
+        "b"
+      ],
+      "resolver": "global.multiplyNumbers"
+      // Base CLI resolver
+    }
+  ],
+  "executionPipeline": "chaining"
+}

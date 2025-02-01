@@ -1,0 +1,36 @@
+{
+  "name": "CLI-Builder",
+  "description": "A modular CLI system with fallback implementations for distributed systems",
+  "plugins": [
+    {
+      "name": "jsonPlugin",
+      "parser": "espree",
+      "description": "Parses JSON-based CLI commands",
+      "commands": {
+        "parseJson": {
+          "arguments": [
+            "jsonData"
+          ],
+          "resolver": "jsonPlugin.parse",
+          "fallback": "fallbacks/jsonFallback.parse"
+        }
+      }
+    },
+    {
+      "name": "customDSLPlugin",
+      "parser": "chevrotain",
+      "description": "Handles a custom DSL for advanced workflows",
+      "commands": {
+        "customCommand": {
+          "arguments": [
+            "arg1",
+            "arg2"
+          ],
+          "resolver": "customDSLPlugin.handleCommand",
+          "fallback": "fallbacks/customDSLFallback.handleCommand"
+        }
+      }
+    }
+  ],
+  "executionPipeline": "chaining"
+}

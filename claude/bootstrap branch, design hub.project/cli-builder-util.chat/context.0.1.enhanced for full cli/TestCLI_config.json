@@ -1,0 +1,48 @@
+{
+  "name": "TestCLI",
+  "description": "A test CLI with variables, verbs, and piping",
+  "variables": {
+    "@file": {
+      "description": "Input file path",
+      "value": "./input.txt"
+    },
+    "@output": {
+      "description": "Output file path",
+      "value": "./output.txt"
+    }
+  },
+  "commands": [
+    {
+      "verb": "echo",
+      "description": "Prints a message",
+      "arguments": [
+        "message"
+      ],
+      "resolver": "function(message) { return `Echo: ${message}`; }"
+    },
+    {
+      "verb": "read",
+      "description": "Reads a file",
+      "arguments": [
+        "@file"
+      ],
+      "options": {
+        "-e, --encoding": "Specify encoding (default: utf8)"
+      },
+      "resolver": "function(file, options) { return require('fs').readFileSync(file, options.encoding || 'utf8'); }"
+    },
+    {
+      "verb": "write",
+      "description": "Writes to a file",
+      "arguments": [
+        "content",
+        "@output"
+      ],
+      "resolver": "function(content, output) { require('fs').writeFileSync(output, content); return `Data written to ${output}`; }"
+    }
+  ],
+  "piping": {
+    "enabled": true,
+    "delimiter": "|"
+  }
+}

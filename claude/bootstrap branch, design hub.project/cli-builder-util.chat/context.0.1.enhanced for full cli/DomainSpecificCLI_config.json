@@ -1,0 +1,54 @@
+{
+  "name": "DomainSpecificCLI",
+  "description": "CLI for a custom domain, enabling variables, verbs, and chaining.",
+  "variables": {
+    "@input": {
+      "description": "Input variable for processing",
+      "value": "/path/to/input/file"
+    },
+    "@output": {
+      "description": "Output variable for storing results",
+      "value": "/path/to/output/"
+    }
+  },
+  "commands": [
+    {
+      "verb": "read",
+      "description": "Read from an input variable",
+      "arguments": [
+        "@input"
+      ],
+      "options": {
+        "-e, --encoding": "Specify file encoding (default: utf8)"
+      },
+      "resolver": "function(input, options) { return fs.readFileSync(input, options.encoding || 'utf8'); }"
+    },
+    {
+      "verb": "process",
+      "description": "Process input data",
+      "arguments": [
+        "data"
+      ],
+      "options": {
+        "-t, --type": "Specify processing type (e.g., JSON)"
+      },
+      "resolver": "function(data, options) { return options.type === 'JSON' ? JSON.parse(data) : data.toString(); }"
+    },
+    {
+      "verb": "write",
+      "description": "Write processed data to the output",
+      "arguments": [
+        "data",
+        "@output"
+      ],
+      "options": {
+        "-f, --format": "Format to save output as (e.g., JSON)"
+      },
+      "resolver": "function(data, output, options) { return fs.writeFileSync(output, options.format === 'JSON' ? JSON.stringify(data) : data); }"
+    }
+  ],
+  "piping": {
+    "enabled": true,
+    "delimiter": "|"
+  }
+}

@@ -7,7 +7,7 @@ Each domain represents a unique factor or space influencing the optimization goa
 ### Domains and Properties
 1. **Hardware Resource Allocation**: Allocates CPU, RAM, bandwidth dynamically across processes.
 2. **Plugin and Package Configurations**: Tracks performance, compatibility, and runtime overheads of various combinations.
-3. **External Perspectives**: Analyzes contributions from external apps and relationships to system perspective.
+3. **External Perspectives**: Analyzes contributions and relationships to system perspective.
 
 ---
 
@@ -49,7 +49,8 @@ E[App][AccessType] = Deviation between expected and realized outcomes (e.g., sta
 ## 3. Additive Error Propagation Across Domains
 
 ### Aggregated Error Formula
-Errors from each domain are aggregated into a global error tensor.
+Errors
+are aggregated into a global error tensor.
 
 E_global = E_Hardware + E_Plugin + E_External.
 
@@ -87,7 +88,8 @@ The system iteratively propagates these combined errors into recalibrated resour
    - AppA destabilizes permissions by frequent read-write actions.
 
 2. Aggregate Errors:
-   - E_global combines errors from all three domains.
+   - E_global combines errors
+domains.
 
 3. Recalibrate:
    - Adjust CPU allocation: 50% to Perspective, 30% to Discovery, 20% to Permissions.

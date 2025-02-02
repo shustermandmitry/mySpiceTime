@@ -53,7 +53,8 @@ Several fields already employ tensor computation, error propagation, and multi-d
 - **Description**: Independent agents optimize their local policies but share their learning toward a global reward or optimization goal.
 - **Relevance**:
   - Each domain acts like an agent with its own feedback loop, contributing error signals to a global goal.
-  - Combining errors from multiple domains aligns with the communication mechanisms in multi-agent systems.
+  - Combining errors
+aligns with the communication mechanisms in multi-agent systems.
 - **Key Concept**: Independent domains (or agents) can dynamically balance interactions using reinforcement signals.
 
 ---

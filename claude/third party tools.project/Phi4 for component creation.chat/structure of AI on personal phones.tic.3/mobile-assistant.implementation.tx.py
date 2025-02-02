@@ -1,9 +1,9 @@
-import torch
-from typing import Dict, List, Optional
-from pathlib import Path
 import json
 import threading
+import torch
 from datetime import datetime
+from typing import Dict, List
+
 
 class MobilePersonalAssistant:
     def __init__(self):
@@ -191,7 +191,7 @@ class MobilePersonalAssistant:
         return overlap / len(query_words)
 
     def _create_prompt(self, question: str, context: List[Dict]) -> str:
-        """Create prompt with question and relevant context"""
+        """Create prompt.0.0.utils design with question and relevant context"""
         context_str = "\n".join(
             f"Context {i+1}: {json.dumps(ctx)}" 
             for i, ctx in enumerate(context)

@@ -1,9 +1,10 @@
-from typing import Dict, List, Optional, Union
-import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer
-from dataclasses import dataclass
 import json
+import torch
+from dataclasses import dataclass
 from enum import Enum
+from transformers import AutoModelForCausalLM, AutoTokenizer
+from typing import Dict
+
 
 class ModelRole(Enum):
     MANAGER = "manager"    # Mistral - handles coordination
@@ -143,7 +144,7 @@ class DualModelSystem:
         return results
 
     def _create_manager_prompt(self, task: str, context: Dict) -> str:
-        """Create prompt for Mistral"""
+        """Create prompt.0.0.utils design for Mistral"""
         return f"""Task: {task}
 
 Context:
@@ -166,7 +167,7 @@ Output in JSON format:
 }}"""
 
     def _create_generator_prompt(self, spec: Dict) -> str:
-        """Create prompt for Phi"""
+        """Create prompt.0.0.utils design for Phi"""
         return f"""Generate code according to the following specification:
 {json.dumps(spec, indent=2)}
 

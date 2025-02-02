@@ -1,9 +1,9 @@
-from typing import Dict, List, Optional
-import torch
-from dataclasses import dataclass
-from enum import Enum
 import numpy as np
+from dataclasses import dataclass
 from datetime import datetime
+from enum import Enum
+from typing import Dict, List
+
 
 @dataclass
 class MemoryConfig:
@@ -221,7 +221,7 @@ class ExpandedBrain:
         context: List[Memory]
     ) -> Dict:
         """Process input with full context window"""
-        # Format prompt with full context
+        # Format prompt.0.0.utils design with full context
         prompt = self._create_prompt(input_data, context)
         
         # Generate response using model
@@ -230,7 +230,7 @@ class ExpandedBrain:
         return response
 
     def _create_prompt(self, input_data: Dict, context: List[Memory]) -> str:
-        """Create prompt with rich context"""
+        """Create prompt.0.0.utils design with rich context"""
         # Format context by type
         context_by_type = {
             type: [m for m in context if m.type == type]

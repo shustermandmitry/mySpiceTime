@@ -1,0 +1,4 @@
+so, thats just an analyzer
+now we need to use it to render in several domains
+* docs - creates typedoc annotations, modules, cat/subcat module hierarchy, design and usage and api refernece for each package, and test coverage doc. generates a gatsby doc site, and aggregates all generated docs in local docs folders, that are used as pages in gatsby doc file, and hirarchial linkages used to create routes
+* code ratings - renders analysis of each package, and each dep tree as a domain, in multipole criterias: test coverage,focus, clarity of intent, modularity, ease of maintainance, adherence to best coding practices

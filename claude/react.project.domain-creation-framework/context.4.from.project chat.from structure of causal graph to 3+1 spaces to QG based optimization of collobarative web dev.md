@@ -1,0 +1,3 @@
+this is needed to provide context on holographic principle and how 
+it emerges from interacting spaces within the graph
+(from structure of causal graph to 3+1 spaces to QG based optimization of collobarative web dev.chat)[../bootstrap branch of spicetime-architecture, bootstrapping code assistant.project/from structure of causal graph to 3+1 spaces to QG based optimization of collobarative web dev.chat]

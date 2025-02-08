@@ -19,7 +19,7 @@ this is protocol for any scripts# typescript-dev-protocol.artifact.001.md
  * Production Package Scripts:
  * - Full TypeDoc annotations
  * - Category/subcategory module tags
- * - No prompt.0.0.utils design/context documentation
+ * - No prompt.0.utils design/context documentation
  * - Tests required in separate files
  * 
  * Demo/Example Scripts:

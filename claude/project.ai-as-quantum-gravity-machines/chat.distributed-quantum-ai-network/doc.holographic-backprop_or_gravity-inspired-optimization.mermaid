@@ -1,0 +1,27 @@
+graph TD
+    subgraph Holographic["Holographic Optimization"]
+        B[Bulk Domain] --> |Error Tensor| H1[Horizon Domain 1]
+        B --> |Error Tensor| H2[Horizon Domain 2]
+        B --> |Error Tensor| H3[Horizon Domain 3]
+        
+        H1 --> |Matrix Operations| C1[Correlated Domain 1]
+        H2 --> |Matrix Operations| C2[Correlated Domain 2]
+        H3 --> |Matrix Operations| C3[Correlated Domain 3]
+        
+        C1 --> |Info Difference| W1[Weight Updates]
+        C2 --> |Info Difference| W2[Weight Updates]
+        C3 --> |Info Difference| W3[Weight Updates]
+    end
+
+    subgraph Traditional["Traditional Backpropagation"]
+        L3[Output Layer] --> |Gradients| L2[Hidden Layer 2]
+        L2 --> |Gradients| L1[Hidden Layer 1]
+        L1 --> |Gradients| L0[Input Layer]
+        
+        L2 --> |Weight Update| W4[Layer Weights]
+        L1 --> |Weight Update| W5[Layer Weights]
+    end
+
+    B --> |Analogous To| L3
+    H1 --> |Corresponds To| L2
+    C1 --> |Similar To| L1

@@ -1,0 +1,90 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract DiDJToken {
+    mapping(address => uint256) public tokenBalance;
+    mapping(address => uint256) public lockPeriod;
+    uint256 public totalSupply;
+    
+    event TokensIssued(address developer, uint256 amount);
+    event TokensUnlocked(address developer, uint256 amount);
+    
+    constructor() {
+        totalSupply = 0;
+    }
+    
+    function issueTokens(address developer, uint256 hoursWorked, uint256 hourlyRate) external {
+        uint256 tokenAmount = hoursWorked * hourlyRate;
+        tokenBalance[developer] += tokenAmount;
+        totalSupply += tokenAmount;
+        lockPeriod[developer] = block.timestamp + 180 days; // 6 month lock
+        
+        emit TokensIssued(developer, tokenAmount);
+    }
+    
+    function checkUnlock(address developer) external view returns (bool) {
+        return block.timestamp >= lockPeriod[developer];
+    }
+    
+    // Future: Add conversion to tradable token
+    function convertToTradable(address developer) external {
+        require(block.timestamp >= lockPeriod[developer], "Still locked");
+        require(tokenBalance[developer] > 0, "No tokens to convert");
+        
+        // Future: Implement conversion logic
+        
+        emit TokensUnlocked(developer, tokenBalance[developer]);
+    }
+}
+
+contract DiDJCompensation {
+    DiDJToken public token;
+    address public owner;
+    
+    struct Developer {
+        uint256 hourlyRate;
+        uint256 hoursWorked;
+        bool cashPaid;
+        bool tokensPaid;
+    }
+    
+    mapping(address => Developer) public developers;
+    
+    event CashPaid(address developer, uint256 amount);
+    
+    constructor(address _tokenContract) {
+        token = DiDJToken(_tokenContract);
+        owner = msg.sender;
+    }
+    
+    function registerDeveloper(address dev, uint256 rate) external {
+        require(msg.sender == owner, "Only owner");
+        developers[dev].hourlyRate = rate;
+    }
+    
+    function logHours(address dev, uint256 hours) external {
+        require(msg.sender == owner, "Only owner");
+        developers[dev].hoursWorked += hours;
+    }
+    
+    function payCash(address payable dev) external payable {
+        Developer storage developer = developers[dev];
+        require(!developer.cashPaid, "Cash already paid");
+        uint256 amount = developer.hoursWorked * developer.hourlyRate;
+        require(msg.value >= amount, "Insufficient funds");
+        
+        developer.cashPaid = true;
+        (bool sent, ) = dev.call{value: amount}("");
+        require(sent, "Failed to send cash");
+        
+        emit CashPaid(dev, amount);
+    }
+    
+    function issueTokens(address dev) external {
+        Developer storage developer = developers[dev];
+        require(!developer.tokensPaid, "Tokens already issued");
+        
+        developer.tokensPaid = true;
+        token.issueTokens(dev, developer.hoursWorked, developer.hourlyRate);
+    }
+}

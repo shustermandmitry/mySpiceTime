@@ -1,0 +1,44 @@
+flowchart TD
+    subgraph Sensors
+        TS[Temperature Array]
+        PS[Pressure Sensor]
+        LS[Level Sensor]
+    end
+
+    subgraph Process Control
+        DC[Data Collection]
+        PID[Temperature Control]
+        LOG[Data Logger]
+        VIZ[Visualizer]
+    end
+
+    subgraph Learning System
+        HIST[Historical Data]
+        PATT[Pattern Analysis]
+        ALERT[Problem Alerts]
+        TREND[Trend Display]
+    end
+
+    subgraph Hardware
+        PUMP[Pump Control]
+        HEAT[Heating Element]
+        MIX[Mixer]
+        DISP[Dispensers]
+    end
+
+    TS & PS & LS --> DC
+    DC --> LOG
+    DC --> PID
+    LOG --> HIST
+    HIST --> PATT
+    PATT --> ALERT
+    HIST --> TREND
+    
+    PID --> HEAT
+    PID --> PUMP
+    PID --> MIX
+    
+    note1[Real-time data collection]
+    note2[Historical learning]
+    note3[Process improvement]
+    note4[Pattern recognition]

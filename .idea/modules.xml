@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/personal.iml" filepath="$PROJECT_DIR$/personal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../spicetime-architecture/.idea/spicetime-architecture.iml" filepath="$PROJECT_DIR$/../spicetime-architecture/.idea/spicetime-architecture.iml" />
     </modules>
   </component>
 </project>

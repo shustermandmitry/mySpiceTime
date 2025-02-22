@@ -69,7 +69,7 @@ Each utility maintains flat organization:
 ```
 core/<util>/
 ├── <util>.ts           # Core implementation
-├── <util>-error.ts     # Error domain
+├── <util>-STError.ts     # Error domain
 ├── <util>-test.ts      # Test suite
 ├── <util>-types.ts     # Type definitions
 └── docs/
@@ -89,7 +89,7 @@ import {getSTARoot} from '@sta/utils/core/sta-scripts';
 ### Error Management
 
 - All errors extend STError base class
-- Error file pattern: `<util>-error.ts`
+- Error file pattern: `<util>-STError.ts`
 - Domain-specific error boundaries
 
 ### Core Utils Summary

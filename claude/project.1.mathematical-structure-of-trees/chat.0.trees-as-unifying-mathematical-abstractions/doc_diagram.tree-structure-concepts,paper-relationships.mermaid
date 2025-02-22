@@ -1,0 +1,40 @@
+graph TD
+    G[Graphs] --> |constraints| T[Pure Trees]
+    T --> |+1 degree| ST[Sequential Trees]
+    ST --> |causality| C[Causal Structure]
+    ST --> |+N degrees| SP[Spatial Structure]
+    
+    subgraph Papers
+        P1[1. Tree Structures:<br/>From Graphs to Reality]
+        P2[2. Sequential Trees<br/>and Causality]
+        P3[3. Emergence of Space<br/>Through Meta-Relationships]
+        P4[4. Context and Meaning<br/>in Tree Structures]
+    end
+    
+    subgraph Concepts
+        M[Meta-Relationships]
+        L[Locality]
+        F[Focus/Context]
+    end
+    
+    T --> P1
+    ST --> P2
+    M --> P3
+    SP --> P3
+    F --> P4
+    L --> P4
+    
+    M --> SP
+    L --> SP
+    F --> M
+
+    style G fill:#f9f,stroke:#333
+    style T fill:#bbf,stroke:#333
+    style ST fill:#bfb,stroke:#333
+    style SP fill:#fbb,stroke:#333
+    style C fill:#fbf,stroke:#333
+    
+    style P1 fill:#eee,stroke:#333
+    style P2 fill:#eee,stroke:#333
+    style P3 fill:#eee,stroke:#333
+    style P4 fill:#eee,stroke:#333

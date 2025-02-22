@@ -1,7 +1,7 @@
 # Foundational Concepts: From Intuitive Tree Structures to Mathematical Formalism
 
 ## Abstract
-This paper establishes a formal bridge between an intuitive understanding of tree structures and their rigorous mathematical foundations. We map colloquial descriptions to established mathematical terminology, particularly focusing on the progression from graphs to trees and the role of additional structural information ("meta") in forming richer mathematical objects.
+This paper establishes a formal bridge between an intuitive understanding of tree structures and their rigorous mathematical foundations. We map colloquial descriptions to established mathematical terminology, particularly focusing on the progression from graphs to trees and the role of additional structural information ("meta") in forming richer mathematical objects. Through this exploration, we discover how fundamental patterns of reality emerge from these basic structures.
 
 ## 1. Introduction
 Tree structures emerge naturally in many domains of thought, from computer science to biology. While intuitive understanding often precedes formal mathematical description, establishing precise correspondence between informal and formal language enables deeper insight and more rigorous analysis.
@@ -43,6 +43,20 @@ Group | Subtree | Connected component containing a vertex and all its descendant
 - Level-order traversal
 - Parent-child relationships through index arithmetic
 
+### 3.3 Temporal Structure Through Prototypes
+- Future = current object (most specific)
+- Now = immediate prototype
+- Past = prototype chain (increasing abstraction)
+- Workshop layer in present for future construction
+
+### 3.4 Workshop Layer and State Change
+- Present workshop creates future capabilities
+- Using current tools to build new tools
+- Workshop provides mutation space
+- Tick operation freezes current state
+- Maintains causal consistency
+- Transactional state changes
+
 ## 4. Meta-Information and Enhanced Structures
 
 ### 4.1 Decorated Trees
@@ -62,6 +76,34 @@ The reactive getter/setter pattern described maps to:
 - Sections of a sheaf (global consistent states)
 - Restriction maps (local updates)
 - Gluing conditions (consistency requirements)
+
+### 4.4 Information Flow Patterns
+
+#### Natural Expansive Pattern
+- Initial rapid expansion of connections
+- Cross-hierarchical relationships form freely
+- High degrees of freedom
+- Natural meta-links emerge
+- Organic relationship formation
+- Like friendships crossing social boundaries
+
+#### Hierarchical Redux Pattern
+- Controlled upward information flow
+- Deliberate diffusion through hierarchy
+- No direct branch merges (preserves acyclic property)
+- New branches grow from synchronized points
+- API surfaces as information filters
+- Maintains clear abstractions but can suppress local expression
+
+### 4.5 Reactive Mechanisms
+- Getter/setter patterns transcend redux constraints
+- Default context binding:
+  - Temporal (bound to "now")
+  - Spatial (bound to node boundary)
+- Hidden logical connections discoverable through:
+  - Event flow tracing
+  - Context manipulation
+  - Experimental perspective shifts
 
 ## 5. Degrees of Freedom and Structure
 
@@ -119,15 +161,32 @@ Examples:
 - 2D space = +2 degrees (x, y positions)
 - 3D space = +3 degrees (x, y, z positions)
 
-### 6.2 DOM Example
-- Elements get positional meta properties
-- Create relationships with other positioned elements
-- Space emerges from relative positions
+### 6.2 Space Evolution
+- Local patch development creates initial structures
+- Connections form based on apparent relationships
+- Accumulation of patches influences connected nodes
+- Original relationships strain under new meaning
+- Structure must adapt while preserving relationships
 
-### 6.3 Locality Principle
+### 6.3 Curvature from Necessity
+Limited Systems:
+- Can branch/copy
+- Multiple versions possible
+- Clean transitions available
+- External storage possible
+
+Universal Scale:
+- Must modify in place
+- No external storage
+- No clean breaks
+- Forces continuous adaptation
+- Curvature emerges from preservation requirements
+
+### 6.4 Locality Principle
 - Meta connections limited to neighbours
 - Prevents dissolution into unstructured graph
 - Maintains meaningful spatial relationships
+- Balance between local and non-local connections
 
 ## 7. Focus and Context
 
@@ -135,6 +194,7 @@ Examples:
 - Total freedom (complete graph) dissolves meaning
 - Structured freedom through context
 - Meta connections respect focus domains
+- Balance between freedom and constraint
 
 ### 7.2 Preserving Meaning
 - Balance between freedom and constraint

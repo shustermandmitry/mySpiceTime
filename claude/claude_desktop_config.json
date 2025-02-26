@@ -1,0 +1,31 @@
+{
+	"mcpServers": {
+		"filesystem": {
+			"command": "npx",
+			"args": [
+				"-y",
+				"@modelcontextprotocol/server-filesystem",
+				"/Users/kriz/Desktop",
+				"/Users/kriz/dev/temp/claude"
+			]
+		},
+		"memory": {
+			"command": "npx",
+			"args": [
+				"-y",
+				"@modelcontextprotocol/server-memory"
+			]
+		},
+		"exec": {
+			"command": "node",
+			"args": [
+				"/Users/kriz/dev/temp/mcp-servers/src/exec/dist/index.js",
+				"dev/temp/claude"
+			]
+		},
+		"puppeteer": {
+			"command": "npx",
+			"args": ["-y", "@modelcontextprotocol/server-puppeteer"]
+		}
+	}
+}

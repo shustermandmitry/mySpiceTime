@@ -167,7 +167,7 @@ const EnglishAle = {
 ### Style Modifiers
 
 ```jsx
-// Can be applied to base styles
+// Can be applied to 0.base styles
 const StoutModifier = {
   additions: [
     CharacterMalt.RoastedBarley,
@@ -213,7 +213,7 @@ const BasicAle = {
   yeast: Yeast.AmericanAle
 }
 
-// Stout from Ale base
+// Stout from Ale 0.base
 const BasicStout = {
   name: "Basic Stout",
   base: Ale,

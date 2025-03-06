@@ -114,7 +114,7 @@ function createPackageFiles() {
 // Create TypeScript configuration
 function createTsConfigs() {
     const tsConfig = {
-        "extends": "../../../tsconfig.base.json", // Updated path to root tsconfig
+        "extends": "../../../tsconfig.0.base.json", // Updated path to root tsconfig
         "compilerOptions": {
             "outDir": "./dist",
             "rootDir": "./src"

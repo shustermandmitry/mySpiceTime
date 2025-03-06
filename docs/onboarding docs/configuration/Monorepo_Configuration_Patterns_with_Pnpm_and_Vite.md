@@ -81,7 +81,7 @@ Each package has its own `vite.config.ts`, inheriting from a shared `vite.base.c
 2. **Package-Specific Overrides (`packages/package-a/vite.config.ts`):**
    ```typescript
    import { mergeConfig } from 'vite';
-   import baseConfig from '../../vite.base.config';
+   import baseConfig from '../../vite.0.base.config';
    import path from 'path';
 
    export default mergeConfig(baseConfig, {

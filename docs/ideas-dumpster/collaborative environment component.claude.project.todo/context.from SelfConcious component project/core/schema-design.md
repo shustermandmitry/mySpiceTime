@@ -151,7 +151,7 @@ app/
 ```typescript
 // app/graphql/schema.ts
 import { mergeSchemas } from '@graphql-tools/schema';
-import { baseSchema } from './base';
+import { baseSchema } from './0.base';
 import { repoSchema } from './repo';
 import { docsSchema } from './docs';
 

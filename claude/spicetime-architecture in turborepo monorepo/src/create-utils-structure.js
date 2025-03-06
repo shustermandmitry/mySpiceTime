@@ -2,7 +2,7 @@
 const fs = require('fs');
 const path = require('path');
 
-// Define base directories
+// Define 0.base directories
 const ROOT_DIR = 'spicetime-architecture';
 const PACKAGES_DIR = path.join(ROOT_DIR, 'packages/utils');
 const INTERNAL_DIR = path.join(ROOT_DIR, 'internal/utils');
@@ -120,7 +120,7 @@ function createPackageFiles() {
 // Create TypeScript configuration files
 function createTsConfig() {
     const tsConfig = {
-        "extends": "../../tsconfig.base.json",
+        "extends": "../../tsconfig.0.base.json",
         "compilerOptions": {
             "outDir": "./dist",
             "rootDir": "./src"

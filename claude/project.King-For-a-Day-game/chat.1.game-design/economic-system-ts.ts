@@ -279,7 +279,7 @@ const example = () => {
       type: "tax",
       impact: 0.2,
       support: 0.7,
-      description: "Reduce base tax rate"
+      description: "Reduce 0.base tax rate"
     }
   ];
 

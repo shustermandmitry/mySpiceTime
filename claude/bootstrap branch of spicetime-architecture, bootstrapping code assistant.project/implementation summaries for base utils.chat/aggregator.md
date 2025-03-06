@@ -28,7 +28,7 @@ The Base Aggregator serves as a foundational utility in the SpiceTime architectu
 
 ```typescript
 interface AggregatorConfig {
-  // Required base paths
+  // Required 0.base paths
   includePaths: string[];
   
   // Required file extensions

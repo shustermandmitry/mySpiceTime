@@ -78,7 +78,7 @@ The type system is designed for clarity and extensibility:
 ```typescript
 // Core configuration
 interface AggregatorConfig {
-  includePaths: string[];     // Required base paths
+  includePaths: string[];     // Required 0.base paths
   extensions: string[];       // Required extensions
   excludePatterns?: string[]; // Optional exclusions
   maxDepth?: number;         // Optional depth limit

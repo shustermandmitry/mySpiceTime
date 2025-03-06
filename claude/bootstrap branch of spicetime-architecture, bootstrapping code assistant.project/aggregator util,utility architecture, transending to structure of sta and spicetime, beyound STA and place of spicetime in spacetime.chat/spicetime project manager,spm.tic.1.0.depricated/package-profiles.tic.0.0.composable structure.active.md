@@ -5,7 +5,7 @@
 ### Base Profile Example
 
 ```yaml
-# base-component.yml
+# 0.base-component.yml
 name: ComponentBase
 type: component
 structure:
@@ -35,7 +35,7 @@ generators:
 
 ```yaml
 # aggregator-component.yml
-extends: base-component
+extends: 0.base-component
 name: AggregatorComponent
 customization:
   folders:
@@ -142,7 +142,7 @@ export default class SpiceTimeGenerator extends Generator {
 
 ```yaml
 # levels of customization
-base-profile.yml
+0.base-profile.yml
 └── component-profile.yml
     └── feature-profile.yml
         └── aggregator-profile.yml

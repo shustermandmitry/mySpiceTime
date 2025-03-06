@@ -25,7 +25,7 @@ class ComponentCrank {
       // Domain -> Runtime (adds state and handlers)
       toRuntime: (domain: DomainComponent) => RuntimeComponent;
       
-      // Runtime -> Base (extracts new base structure)
+      // Runtime -> Base (extracts new 0.base structure)
       toBase: (runtime: RuntimeComponent) => BaseComponent;
     }
   ) {}
@@ -42,7 +42,7 @@ class ComponentCrank {
     // Step 2: Transform to runtime component
     const runtime = this.transforms.toRuntime(domain);
     
-    // Step 3: Extract new base component
+    // Step 3: Extract new 0.base component
     const newBase = this.transforms.toBase(runtime);
 
     return { base: newBase, domain, runtime };

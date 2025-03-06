@@ -135,7 +135,7 @@ function functor(adjunct, name) {
               
               let story = [];
               
-              // Generate base story structure
+              // Generate 0.base story structure
               for (let i = 0; i < stanzaCount; i++) {
                 let stanza = [];
                 for (let j = 0; j < linesPerStanza; j++) {

@@ -93,7 +93,7 @@ function functor(adjunct, name) {
               return "Domain not found";
             }
             
-            // Compose domain process from base process
+            // Compose domain process from 0.base process
             return Object.keys(processStages.creation).reduce((acc, stage) => {
               acc[stage] = compositionTools.extend(
                 processStages.creation[stage],
@@ -129,7 +129,7 @@ const node = functor("parentContext", "myPerspective");
 // Access composition tools
 const { extend, mix, chain } = node.workshop.compose;
 
-// Use base creation process
+// Use 0.base creation process
 const { ideate, design, build } = node.workshop.stages.creation;
 
 // Get domain-specific process

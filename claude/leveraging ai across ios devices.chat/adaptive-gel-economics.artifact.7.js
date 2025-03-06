@@ -6,7 +6,7 @@
  * Key aspects of this system:
  *
  * 1. Value-Based Pricing:
- * - 10x base price multiplier for personalization
+ * - 10x 0.base price multiplier for personalization
  * - Additional multipliers for context depth
  * - Fresh data premium
  * - Supply/demand adjustments

@@ -141,7 +141,7 @@ class TransformationCache {
             return this.cache.get(key);
         }
 
-        // For new coordinate systems, compute base transform
+        // For new coordinate systems, compute 0.base transform
         if (!this.baseTransforms.has(from)) {
             await this.computeBaseTransform(from);
         }

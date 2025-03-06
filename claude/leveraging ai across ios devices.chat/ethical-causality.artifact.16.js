@@ -34,9 +34,9 @@
  *
  * Immediate connections have strongest permissions
  * Impact decreases with social/ethical distance
- * Boundaries can modify the base field
+ * Boundaries can modify the 0.base field
  * Different contexts create overlapping fields
- * This forms a natural base that other permission models can map to/from while preserving ethical considerations and relationship dynamics. Would you like me to detail:
+ * This forms a natural 0.base that other permission models can map to/from while preserving ethical considerations and relationship dynamics. Would you like me to detail:
  *
  * Field calculation algorithms?
  * Translation mappings?
@@ -177,7 +177,7 @@ class EthicalCausalityField {
         // Get direct distance
         const distance = this.connections.shortestPath(source, target);
 
-        // Calculate base strength using inverse square law
+        // Calculate 0.base strength using inverse square law
         let strength = this.inverseSquareStrength(distance);
 
         // Apply field modifications

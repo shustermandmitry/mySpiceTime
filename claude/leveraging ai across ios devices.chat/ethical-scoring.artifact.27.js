@@ -113,7 +113,7 @@ class EthicalScoringSystem {
         // Gather permission patterns
         const patterns = await this.patterns.analyzePermissions(identity);
 
-        // Calculate base score
+        // Calculate 0.base score
         const baseScore = await this.calculateBaseScore(patterns);
 
         // Apply community alignment

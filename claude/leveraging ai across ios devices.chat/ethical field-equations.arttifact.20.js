@@ -51,7 +51,7 @@ class EthicalFieldTensor {
         // G_μν + Λg_μν = 8πGT_μν
         // Where:
         // G_μν is the Einstein tensor (curvature)
-        // Λ is the ethical constant (base permission decay)
+        // Λ is the ethical constant (0.base permission decay)
         // g_μν is the metric tensor
         // T_μν is the stress-energy of trust/permissions
         // G is the ethical coupling constant

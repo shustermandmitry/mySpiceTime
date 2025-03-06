@@ -16,7 +16,7 @@ interface EstimationConfig {
     noiseThreshold: number;
 }
 
-// Abstract base for different estimators
+// Abstract 0.base for different estimators
 abstract class TensorEstimator {
     protected config: EstimationConfig;
     protected measurements: Measurement[];
